@@ -3,13 +3,12 @@ services:
     image: postgres:16
     container_name: postgres-user
     environment:
-      POSTGRES_USER: ${USER_POSTGRES_USER}
-      POSTGRES_PASSWORD: ${USER_POSTGRES_PASSWORD}
-      POSTGRES_DB: ${USER_POSTGRES_DB}
+      POSTGRES_USER: ${USER_DB_USER}
+      POSTGRES_PASSWORD: ${USER_DB_PASSWORD}
     volumes:
-      - pgdata:/var/lib/postgresql/user/data
+      - pgdata-user:/var/lib/postgresql/data
     ports:
-      - "${POSTGRES_PORT}:5432"
+      - "${USER_DB_PORT}:5432"
     networks:
       - backend_network
 
@@ -17,13 +16,12 @@ services:
     image: postgres:16
     container_name: postgres-workout
     environment:
-      POSTGRES_USER: ${WORKOUT_POSTGRES_USER}
-      POSTGRES_PASSWORD: ${WORKOUT_POSTGRES_PASSWORD}
-      POSTGRES_DB: ${WORKOUT_POSTGRES_DB}
+      POSTGRES_USER: ${WORKOUT_DB_USER}
+      POSTGRES_PASSWORD: ${WORKOUT_DB_PASSWORD}
     volumes:
-      - pgdata:/var/lib/postgresql/workout/data
+      - pgdata-workout:/var/lib/postgresql/data
     ports:
-      - "${POSTGRES_PORT}:5432"
+      - "${WORKOUT_DB_PORT}:5432"
     networks:
       - backend_network
 
@@ -47,5 +45,6 @@ networks:
     driver: bridge
 
 volumes:
-  pgdata:
+  pgdata-user:
+  pgdata-workout:
   rabbitmq_data:
