@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "target": "es2023",
+        "module": "nodenext",
+        "moduleResolution": "nodenext",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "baseUrl": ".",
+        "paths": {
+            "@contracts/*": ["packages/contracts/src/*"],
+            "@utils/*": ["packages/utils/src/*"],
+            "@database/*": ["packages/database/src/*"],
+            "@core/*": ["packages/core/src/*"]
+        }
+    }
+}

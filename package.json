@@ -1,0 +1,22 @@
+{
+  "name": "tg-workout",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:gateway": "npm run dev -w apps/gateway",
+    "dev:user": "npm run dev -w apps/user-service",
+    "dev:workout": "npm run dev -w apps/workout-service",
+    "dev:parse": "npm run dev -w apps/parse-service",
+    "dev:chat": "npm run dev -w apps/chat-service",
+    "dev:bot": "npm run dev -w apps/bot",
+    "build": "npm run build --workspaces",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down"
+  },
+  "dependencies": {
+    "uuid": "^13.0.0"
+  }
+}
