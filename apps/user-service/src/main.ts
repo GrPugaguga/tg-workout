@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ENV } from '@core/env.config';
-import { createLogger } from '@utils/logger'
+import { ENV } from '@app/core';
+import { createLogger } from '@app/utils'
 
 export const logger = createLogger('user-service')
 

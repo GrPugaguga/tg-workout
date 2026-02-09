@@ -3,7 +3,7 @@ import { User } from '../users/entities/user.entity';
 import { JwtPayload } from './strategies/jwt.strategy';
 import { JwtService } from '@nestjs/jwt';
 import { JwtResponseDto } from './dto/jwt-response.dto';
-import { ENV } from '@core/env.config';
+import { ENV } from '@app/core';
 import { createHmac } from 'crypto';
 import { UsersService } from '../users/users.service';
 import { TelegramUserDto } from './dto/telegramUser.dto';

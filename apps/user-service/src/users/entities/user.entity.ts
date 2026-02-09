@@ -1,9 +1,10 @@
-import { Field, ID, Int } from '@nestjs/graphql';
+import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { TelegramId } from '../value-objects/telegramId.value-object';
 import { TelegramIdTransformer } from '../value-objects/telegramId.transformer';
 
 
+@ObjectType()
 @Entity({name: 'users'})
 export class User{
     @Field(() => ID)

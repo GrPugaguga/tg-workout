@@ -1,44 +1,105 @@
 {
-  "name": "tg-workout",
+  "name": "tg-workout-mono",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "license": "UNLICENSED",
   "scripts": {
-    "dev:gateway": "npm run dev -w apps/gateway",
-    "dev:user": "npm run start:dev -w apps/user-service",
-    "dev:workout": "npm run dev -w apps/workout-service",
-    "dev:parse": "npm run dev -w apps/parse-service",
-    "dev:chat": "npm run dev -w apps/chat-service",
-    "dev:bot": "npm run dev -w apps/bot",
-    "build": "npm run build --workspaces",
+    "dev:user": "nest start user-service --watch",
+    "dev:gateway": "nest start gateway --watch",
+    "build:user": "nest build user-service",
+    "build:gateway": "nest build gateway",
     "docker:up": "docker-compose up -d",
-    "docker:down": "docker-compose down"
+    "docker:down": "docker-compose down",
+    "build": "nest build",
+    "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
+    "start:prod": "node dist/apps/tg-workout-mono/main",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./apps/tg-workout-mono/test/jest-e2e.json"
   },
   "dependencies": {
+    "@as-integrations/express5": "^1.1.2",
     "@nestjs/apollo": "^13.2.4",
-    "@nestjs/common": "^11.1.13",
-    "@nestjs/core": "^11.1.13",
+    "@nestjs/common": "^11.0.1",
+    "@nestjs/core": "^11.0.1",
     "@nestjs/graphql": "^13.2.4",
     "@nestjs/jwt": "^11.0.2",
     "@nestjs/passport": "^11.0.5",
-    "@nestjs/platform-express": "^11.1.13",
+    "@nestjs/platform-express": "^11.0.1",
     "@nestjs/terminus": "^11.0.0",
     "@nestjs/typeorm": "^11.0.0",
-    "apollo-server-express": "^3.13.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.3",
+    "dotenv": "^16.0.0",
     "graphql": "^16.12.0",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
-    "passport-local": "^1.0.0",
     "pg": "^8.18.0",
     "pino": "^10.3.0",
-    "pino-http": "^11.0.0",
     "pino-pretty": "^13.1.3",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1",
     "typeorm": "^0.3.28",
-    "uuid": "^13.0.0",
     "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.18.0",
+    "@nestjs/cli": "^11.0.0",
+    "@nestjs/schematics": "^11.0.0",
+    "@nestjs/testing": "^11.0.1",
+    "@types/express": "^5.0.0",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^22.10.7",
+    "@types/supertest": "^6.0.2",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.2",
+    "globals": "^16.0.0",
+    "jest": "^30.0.0",
+    "prettier": "^3.4.2",
+    "source-map-support": "^0.5.21",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.5",
+    "ts-loader": "^9.5.2",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.20.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": ".",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "./coverage",
+    "testEnvironment": "node",
+    "roots": [
+      "<rootDir>/apps/",
+      "<rootDir>/libs/"
+    ],
+    "moduleNameMapper": {
+      "^@app/contracts(|/.*)$": "<rootDir>/libs/contracts/src/$1",
+      "^@app/core(|/.*)$": "<rootDir>/libs/core/src/$1",
+      "^@app/database(|/.*)$": "<rootDir>/libs/database/src/$1",
+      "^@app/utils(|/.*)$": "<rootDir>/libs/utils/src/$1"
+    }
   }
 }

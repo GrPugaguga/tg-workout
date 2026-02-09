@@ -121,11 +121,9 @@ nest g lib database
 ```
 
 Для каждой библиотеки NestJS CLI:
-- Создаст `libs/<name>/src/index.ts` и `<name>.module.ts` и `<name>.service.ts`
+- Создаст `libs/<name>/src/index.ts` и `<name>.module.ts`
 - Добавит в `nest-cli.json`
 - Настроит path alias `@app/<name>` в `tsconfig.json`
-
-**Важно:** CLI создаст `<name>.module.ts` и `<name>.service.ts` — **удали их**. Наши либы это чистые утилиты (константы, функции, классы), им не нужен NestJS Module. NestJS Module нужен только если либа предоставляет DI-провайдеры (сервисы с `@Injectable()`).
 
 ### Шаг 5: Перенеси код
 
