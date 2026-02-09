@@ -1,4 +1,20 @@
+import dotenv from 'dotenv'
+import path from 'path'
+import fs from 'fs'
 import { z } from "zod"
+
+function findEnvFile(startDir: string): string | undefined {
+    let dir = startDir
+    while (true) {
+        const envPath = path.join(dir, '.env')
+        if (fs.existsSync(envPath)) return envPath
+        const parent = path.dirname(dir)
+        if (parent === dir) return undefined
+        dir = parent
+    }
+}
+
+dotenv.config({ path: findEnvFile(process.cwd()) })
 
 const envSchema = z.object({
     NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
@@ -7,16 +23,25 @@ const envSchema = z.object({
     GATEWAY_PORT: z.coerce.number().default(3000),
 
     USER_SERVICE_PORT: z.coerce.number().default(3001),
+    USER_DB_HOST: z.string(),
+    USER_DB_PORT: z.coerce.number(),
     USER_DB_USER: z.string(),
     USER_DB_PASSWORD: z.string(),
 
+    WORKOUT_DB_HOST: z.string(),
+    WORKOUT_DB_PORT: z.coerce.number(),
     WORKOUT_DB_USER: z.string(),
     WORKOUT_DB_PASSWORD: z.string(),
     WORKOUT_SERVICE_PORT: z.coerce.number().default(3002),
 
     RABBIT_USER: z.string(),
     RABBIT_PASSWORD: z.string(),
-    RABBITMQ_URL: z.string()
+    RABBITMQ_URL: z.string(),
+
+    BOT_TOKEN: z.string(),
+
+    JWT_SECRET: z.string(),
+    JWT_EXPIRES_IN: z.coerce.number().default(86400)
 })
 
 export const ENV = envSchema.parse(process.env)

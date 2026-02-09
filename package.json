@@ -7,7 +7,7 @@
   ],
   "scripts": {
     "dev:gateway": "npm run dev -w apps/gateway",
-    "dev:user": "npm run dev -w apps/user-service",
+    "dev:user": "npm run start:dev -w apps/user-service",
     "dev:workout": "npm run dev -w apps/workout-service",
     "dev:parse": "npm run dev -w apps/parse-service",
     "dev:chat": "npm run dev -w apps/chat-service",
@@ -17,9 +17,27 @@
     "docker:down": "docker-compose down"
   },
   "dependencies": {
+    "@nestjs/apollo": "^13.2.4",
+    "@nestjs/common": "^11.1.13",
+    "@nestjs/core": "^11.1.13",
+    "@nestjs/graphql": "^13.2.4",
+    "@nestjs/jwt": "^11.0.2",
+    "@nestjs/passport": "^11.0.5",
+    "@nestjs/platform-express": "^11.1.13",
+    "@nestjs/terminus": "^11.0.0",
+    "@nestjs/typeorm": "^11.0.0",
+    "apollo-server-express": "^3.13.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.3",
+    "graphql": "^16.12.0",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0",
+    "pg": "^8.18.0",
     "pino": "^10.3.0",
     "pino-http": "^11.0.0",
     "pino-pretty": "^13.1.3",
+    "typeorm": "^0.3.28",
     "uuid": "^13.0.0",
     "zod": "^4.3.6"
   }
