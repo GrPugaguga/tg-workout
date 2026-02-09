@@ -1,24 +1,25 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
-import { UserServiceModule } from './../src/user-service.module';
+import { INestApplication } from '@nestjs/common'
+import { Test, TestingModule } from '@nestjs/testing'
+import * as request from 'supertest'
+
+import { UserServiceModule } from './../src/user-service.module'
 
 describe('UserServiceController (e2e)', () => {
-  let app: INestApplication;
+	let app: INestApplication
 
-  beforeEach(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [UserServiceModule],
-    }).compile();
+	beforeEach(async () => {
+		const moduleFixture: TestingModule = await Test.createTestingModule({
+			imports: [UserServiceModule]
+		}).compile()
 
-    app = moduleFixture.createNestApplication();
-    await app.init();
-  });
+		app = moduleFixture.createNestApplication()
+		await app.init()
+	})
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
-  });
-});
+	it('/ (GET)', () => {
+		return request(app.getHttpServer())
+			.get('/')
+			.expect(200)
+			.expect('Hello World!')
+	})
+})

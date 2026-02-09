@@ -1,2 +1,2 @@
-export * from "./UUID"
-export * from "./logger"
+export * from './UUID'
+export * from './logger'

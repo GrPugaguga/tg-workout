@@ -1,47 +1,51 @@
 import dotenv from 'dotenv'
-import path from 'path'
 import fs from 'fs'
-import { z } from "zod"
+import path from 'path'
+import { z } from 'zod'
 
 function findEnvFile(startDir: string): string | undefined {
-    let dir = startDir
-    while (true) {
-        const envPath = path.join(dir, '.env')
-        if (fs.existsSync(envPath)) return envPath
-        const parent = path.dirname(dir)
-        if (parent === dir) return undefined
-        dir = parent
-    }
+	let dir = startDir
+	while (true) {
+		const envPath = path.join(dir, '.env')
+		if (fs.existsSync(envPath)) return envPath
+		const parent = path.dirname(dir)
+		if (parent === dir) return undefined
+		dir = parent
+	}
 }
 
 dotenv.config({ path: findEnvFile(process.cwd()) })
 
 const envSchema = z.object({
-    NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
-    LOG_LEVEL: z.enum(['trace', 'debug', 'info', 'warn', 'error', 'fatal']).default('info'),
-  
-    GATEWAY_PORT: z.coerce.number().default(3000),
+	NODE_ENV: z
+		.enum(['development', 'production', 'test'])
+		.default('development'),
+	LOG_LEVEL: z
+		.enum(['trace', 'debug', 'info', 'warn', 'error', 'fatal'])
+		.default('info'),
 
-    USER_SERVICE_PORT: z.coerce.number().default(3001),
-    USER_DB_HOST: z.string(),
-    USER_DB_PORT: z.coerce.number(),
-    USER_DB_USER: z.string(),
-    USER_DB_PASSWORD: z.string(),
+	GATEWAY_PORT: z.coerce.number().default(3000),
 
-    WORKOUT_DB_HOST: z.string(),
-    WORKOUT_DB_PORT: z.coerce.number(),
-    WORKOUT_DB_USER: z.string(),
-    WORKOUT_DB_PASSWORD: z.string(),
-    WORKOUT_SERVICE_PORT: z.coerce.number().default(3002),
+	USER_SERVICE_PORT: z.coerce.number().default(3001),
+	USER_DB_HOST: z.string(),
+	USER_DB_PORT: z.coerce.number(),
+	USER_DB_USER: z.string(),
+	USER_DB_PASSWORD: z.string(),
 
-    RABBIT_USER: z.string(),
-    RABBIT_PASSWORD: z.string(),
-    RABBITMQ_URL: z.string(),
+	WORKOUT_DB_HOST: z.string(),
+	WORKOUT_DB_PORT: z.coerce.number(),
+	WORKOUT_DB_USER: z.string(),
+	WORKOUT_DB_PASSWORD: z.string(),
+	WORKOUT_SERVICE_PORT: z.coerce.number().default(3002),
 
-    BOT_TOKEN: z.string(),
+	RABBIT_USER: z.string(),
+	RABBIT_PASSWORD: z.string(),
+	RABBITMQ_URL: z.string(),
 
-    JWT_SECRET: z.string(),
-    JWT_EXPIRES_IN: z.coerce.number().default(86400)
+	BOT_TOKEN: z.string(),
+
+	JWT_SECRET: z.string(),
+	JWT_EXPIRES_IN: z.coerce.number().default(86400)
 })
 
 export const ENV = envSchema.parse(process.env)

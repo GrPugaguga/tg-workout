@@ -1,10 +1,10 @@
-import { Field, Int, ObjectType } from "@nestjs/graphql";
+import { Field, Int, ObjectType } from '@nestjs/graphql'
 
 @ObjectType()
 export class JwtResponseDto {
-    @Field()
-    accessToken!:string
+	@Field()
+	accessToken!: string
 
-  @Field(() => Int)
-    expiredAt!: number
+	@Field(() => Int)
+	expiredAt!: number
 }
