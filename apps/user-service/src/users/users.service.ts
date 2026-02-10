@@ -1,20 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
 
 import { CreateUserInput } from './dto/create-user.input'
 import { User } from './entities/user.entity'
+import { UserRepositoryPort } from './repository/user.repository.abstract'
 import { TelegramId } from './value-objects/telegramId.value-object'
 
 @Injectable()
 export class UsersService {
-	constructor(
-		@InjectRepository(User)
-		private usersRepository: Repository<User>
-	) {}
+	constructor(private readonly usersRepository: UserRepositoryPort) {}
 
 	async create(createUserInput: CreateUserInput): Promise<User> {
-		const newUser = await this.usersRepository.create({
+		const newUser = this.usersRepository.create({
 			...createUserInput,
 			telegramId: new TelegramId(createUserInput.telegramId)
 		})
@@ -22,35 +18,33 @@ export class UsersService {
 	}
 
 	async findOne(id: string): Promise<User> {
-		const user = await this.usersRepository.findOne({ where: { id: id } })
+		const user = await this.usersRepository.findById(id)
 		if (!user)
 			throw new NotFoundException(`User with id ${id} is not found`)
 		return user
 	}
 
 	async findOrCreate(createUserInput: CreateUserInput): Promise<User> {
-		const existing = await this.usersRepository.findOne({
-			where: { telegramId: new TelegramId(createUserInput.telegramId) }
-		})
+		const existing = await this.usersRepository.findByTelegramId(
+			new TelegramId(createUserInput.telegramId)
+		)
 		if (existing) return existing
 
 		return this.create(createUserInput)
 	}
 
-	async findByTg(id: number): Promise<User> {
-		const user = await this.usersRepository.findOne({
-			where: { telegramId: new TelegramId(id) }
-		})
+	async findByTg(telegramId: TelegramId): Promise<User> {
+		const user = await this.usersRepository.findByTelegramId(telegramId)
 		if (!user)
-			throw new NotFoundException(`User with id ${id} is not found`)
+			throw new NotFoundException(
+				`User with id ${telegramId} is not found`
+			)
 		return user
 	}
 
-	async remove(id: number): Promise<void> {
-		const result = await this.usersRepository.delete({
-			telegramId: new TelegramId(id)
-		})
-		if (result.affected === 0)
+	async remove(id: string): Promise<void> {
+		const result = await this.usersRepository.delete(id)
+		if (!result)
 			throw new NotFoundException(`User with id ${id} is not found`)
 	}
 }
