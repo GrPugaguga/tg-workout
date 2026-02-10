@@ -26,15 +26,15 @@ export class User {
 	telegramId!: TelegramId
 
 	@Field({ nullable: true })
-	@Column()
+	@Column({ nullable: true })
 	username?: string
 
 	@Field({ nullable: true })
-	@Column()
+	@Column({ nullable: true })
 	firstName?: string
 
 	@Field({ nullable: true })
-	@Column()
+	@Column({ nullable: true })
 	lastName?: string
 
 	@Field(() => Int, { description: 'Created at' })
