@@ -23,7 +23,7 @@ export class Workout {
 
 	@Field(() => String)
 	@Column({ type: 'date' })
-	date!: string
+	date!: Date
 
 	@Field({ nullable: true })
 	@Column({ nullable: true })
