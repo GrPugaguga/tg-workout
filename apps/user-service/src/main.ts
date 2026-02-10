@@ -13,5 +13,8 @@ async function bootstrap() {
 	logger.info(
 		`Health check on http://localhost:${ENV.USER_SERVICE_PORT}/health`
 	)
+	logger.info(
+		`GraphQL Playground http://localhost:${ENV.USER_SERVICE_PORT}/graphql`
+	)
 }
 bootstrap()

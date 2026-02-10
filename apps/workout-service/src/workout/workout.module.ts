@@ -1,9 +1,32 @@
 import { Module } from '@nestjs/common'
+import { TypeOrmModule } from '@nestjs/typeorm'
 
+import { ExerciseModule } from '../exercise/exercise.module'
+
+import { WorkoutExercise } from './entities/workout-exercise.entity'
+import { WorkoutSet } from './entities/workout-set.entity'
+import { Workout } from './entities/workout.entity'
+import { WorkoutEventsListener } from './events/workout-events.listener'
+import { WorkoutRepository } from './repository/workout.repository'
+import { WorkoutRepositoryPort } from './repository/workout.repository.abstract'
+import { WorkoutCommandService } from './workout-command.service'
+import { WorkoutQueryService } from './workout-query.service'
 import { WorkoutResolver } from './workout.resolver'
-import { WorkoutService } from './workout.service'
 
 @Module({
-	providers: [WorkoutResolver, WorkoutService]
+	imports: [
+		TypeOrmModule.forFeature([Workout, WorkoutExercise, WorkoutSet]),
+		ExerciseModule
+	],
+	providers: [
+		WorkoutResolver,
+		WorkoutCommandService,
+		WorkoutQueryService,
+		WorkoutEventsListener,
+		{
+			provide: WorkoutRepositoryPort,
+			useClass: WorkoutRepository
+		}
+	]
 })
 export class WorkoutModule {}

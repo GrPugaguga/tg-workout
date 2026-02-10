@@ -10,7 +10,7 @@ import { UsersModule } from './users/users.module'
 
 @Module({
 	imports: [
-		TypeOrmModule.forRoot(dataSource.options),
+		TypeOrmModule.forRoot({ ...dataSource.options, migrations: [] }),
 		GraphQLModule.forRoot<ApolloDriverConfig>({
 			driver: ApolloDriver,
 			autoSchemaFile: true

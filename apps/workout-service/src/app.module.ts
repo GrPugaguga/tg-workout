@@ -1,5 +1,6 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { Module } from '@nestjs/common'
+import { EventEmitterModule } from '@nestjs/event-emitter'
 import { GraphQLModule } from '@nestjs/graphql'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
@@ -10,7 +11,8 @@ import { WorkoutModule } from './workout/workout.module'
 
 @Module({
 	imports: [
-		TypeOrmModule.forRoot(dataSource.options),
+		EventEmitterModule.forRoot(),
+		TypeOrmModule.forRoot({ ...dataSource.options, migrations: [] }),
 		GraphQLModule.forRoot<ApolloDriverConfig>({
 			driver: ApolloDriver,
 			autoSchemaFile: true

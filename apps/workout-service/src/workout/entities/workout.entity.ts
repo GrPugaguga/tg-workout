@@ -21,9 +21,9 @@ export class Workout {
 	@Column()
 	userId!: string
 
-	@Field()
+	@Field(() => String)
 	@Column({ type: 'date' })
-	date!: Date
+	date!: string
 
 	@Field({ nullable: true })
 	@Column({ nullable: true })
