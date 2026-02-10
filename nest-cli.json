@@ -72,6 +72,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/utils/tsconfig.lib.json"
       }
+    },
+    "workout-service": {
+      "type": "application",
+      "root": "apps/workout-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/workout-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/workout-service/tsconfig.app.json"
+      }
     }
   }
 }
