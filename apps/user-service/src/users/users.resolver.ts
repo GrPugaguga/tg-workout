@@ -1,7 +1,9 @@
 import { UseGuards } from '@nestjs/common'
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 
+import { CurrentUser } from '../auth/decorators/current-user.decorator'
 import { JWTAuthGuard } from '../auth/guards/jwt-auth.guard'
+import { OnlySelfGuard } from '../auth/guards/only-self.guard'
 
 import { CreateUserInput } from './dto/create-user.input'
 import { User } from './entities/user.entity'
@@ -16,9 +18,10 @@ export class UsersResolver {
 		return this.usersService.create(createUserInput)
 	}
 
-	@Query(() => User, { name: 'user' })
-	findOne(@Args('id') id: string) {
-		return this.usersService.findOne(id)
+	@UseGuards(JWTAuthGuard)
+	@Query(() => User, { name: 'me' })
+	me(@CurrentUser() user: User) {
+		return user
 	}
 
 	@Query(() => User, { name: 'userByTelegramId' })
@@ -26,6 +29,7 @@ export class UsersResolver {
 		return this.usersService.findByTg(telegramId)
 	}
 
+	@UseGuards(JWTAuthGuard, OnlySelfGuard)
 	@Mutation(() => User)
 	removeUser(@Args('id') id: string) {
 		return this.usersService.remove(id)
