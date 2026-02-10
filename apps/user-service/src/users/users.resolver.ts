@@ -6,7 +6,6 @@ import { JWTAuthGuard } from '../auth/guards/jwt-auth.guard'
 import { CreateUserInput } from './dto/create-user.input'
 import { User } from './entities/user.entity'
 import { UsersService } from './users.service'
-import { TelegramId } from './value-objects/telegramId.value-object'
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -22,13 +21,13 @@ export class UsersResolver {
 		return this.usersService.findOne(id)
 	}
 
-	@Query(() => User, { name: 'user' })
-	userByTelegramId(@Args('telegramId') telegramId: TelegramId) {
+	@Query(() => User, { name: 'userByTelegramId' })
+	userByTelegramId(@Args('telegramId') telegramId: number) {
 		return this.usersService.findByTg(telegramId)
 	}
 
 	@Mutation(() => User)
-	removeUser(@Args('id', { type: () => Int }) id: string) {
+	removeUser(@Args('id') id: string) {
 		return this.usersService.remove(id)
 	}
 }
