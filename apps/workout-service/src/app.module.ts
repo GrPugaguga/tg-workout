@@ -1,3 +1,4 @@
+import { createLoggerModule } from '@app/utils'
 import {
 	ApolloFederationDriver,
 	ApolloFederationDriverConfig
@@ -16,6 +17,7 @@ import { WorkoutModule } from './workout/workout.module'
 
 @Module({
 	imports: [
+		createLoggerModule('workout-service'),
 		EventEmitterModule.forRoot(),
 		TypeOrmModule.forRoot({ ...dataSource.options, migrations: [] }),
 		GraphQLModule.forRoot<ApolloFederationDriverConfig>({

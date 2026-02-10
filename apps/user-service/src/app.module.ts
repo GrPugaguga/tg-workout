@@ -1,3 +1,4 @@
+import { createLoggerModule } from '@app/utils'
 import {
 	ApolloFederationDriver,
 	ApolloFederationDriverConfig
@@ -13,6 +14,7 @@ import { UsersModule } from './users/users.module'
 
 @Module({
 	imports: [
+		createLoggerModule('user-service'),
 		TypeOrmModule.forRoot({ ...dataSource.options, migrations: [] }),
 		GraphQLModule.forRoot<ApolloFederationDriverConfig>({
 			driver: ApolloFederationDriver,

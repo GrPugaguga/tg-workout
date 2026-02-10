@@ -1,14 +1,12 @@
 import { ENV } from '@app/core'
-import { Logger } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
+import { Logger } from 'nestjs-pino'
 
 import { GatewayModule } from './gateway.module'
 
 async function bootstrap() {
-	const app = await NestFactory.create(GatewayModule)
+	const app = await NestFactory.create(GatewayModule, { bufferLogs: true })
+	app.useLogger(app.get(Logger))
 	await app.listen(ENV.GATEWAY_PORT)
-	Logger.log(
-		`Gateway running on http://localhost:${ENV.GATEWAY_PORT}/graphql`
-	)
 }
 bootstrap()

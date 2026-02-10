@@ -1,5 +1,6 @@
 import { IntrospectAndCompose, RemoteGraphQLDataSource } from '@apollo/gateway'
 import { ENV, X_CORRELATION_ID, X_TELEGRAM_ID, X_USER_ID } from '@app/core'
+import { createLoggerModule } from '@app/utils'
 import { ApolloGatewayDriver, ApolloGatewayDriverConfig } from '@nestjs/apollo'
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
 import { GraphQLModule } from '@nestjs/graphql'
@@ -12,6 +13,7 @@ import { CorrelationIdMiddleware } from './middleware/correlation-id.middleware'
 
 @Module({
 	imports: [
+		createLoggerModule('gateway'),
 		JwtModule.register({
 			secret: ENV.JWT_SECRET
 		}),

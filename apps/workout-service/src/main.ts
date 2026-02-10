@@ -1,20 +1,14 @@
 import { ENV } from '@app/core'
-import { createLogger } from '@app/utils'
 import { NestFactory } from '@nestjs/core'
+import { Logger } from 'nestjs-pino'
 
 import { WorkoutServiceModule } from './app.module'
 
-export const logger = createLogger('workout-service')
-
 async function bootstrap() {
-	const app = await NestFactory.create(WorkoutServiceModule)
+	const app = await NestFactory.create(WorkoutServiceModule, {
+		bufferLogs: true
+	})
+	app.useLogger(app.get(Logger))
 	await app.listen(ENV.WORKOUT_SERVICE_PORT)
-	logger.info(`Server start on http://localhost:${ENV.WORKOUT_SERVICE_PORT}`)
-	logger.info(
-		`Health check on http://localhost:${ENV.WORKOUT_SERVICE_PORT}/health`
-	)
-	logger.info(
-		`GraphQL Playground http://localhost:${ENV.WORKOUT_SERVICE_PORT}/graphql`
-	)
 }
 bootstrap()
