@@ -1,3 +1,4 @@
+import { X_USER_ID } from '@app/core'
 import {
 	CanActivate,
 	ExecutionContext,
@@ -5,18 +6,15 @@ import {
 	Injectable
 } from '@nestjs/common'
 import { GqlExecutionContext } from '@nestjs/graphql'
-import { Observable } from 'rxjs'
 
 @Injectable()
 export class OnlySelfGuard implements CanActivate {
-	canActivate(
-		context: ExecutionContext
-	): boolean | Promise<boolean> | Observable<boolean> {
+	canActivate(context: ExecutionContext): boolean {
 		const ctx = GqlExecutionContext.create(context)
-		const user = ctx.getContext().req.user
+		const userId = ctx.getContext().req.headers[X_USER_ID]
 		const args = ctx.getArgs()
 
-		if (args.id && args.id !== user.id) {
+		if (args.id && args.id !== userId) {
 			throw new ForbiddenException('You can only access your own data')
 		}
 

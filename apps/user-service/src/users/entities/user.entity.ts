@@ -1,4 +1,4 @@
-import { Field, ID, Int, ObjectType } from '@nestjs/graphql'
+import { Directive, Field, ID, Int, ObjectType } from '@nestjs/graphql'
 import {
 	Column,
 	CreateDateColumn,
@@ -11,6 +11,7 @@ import { TelegramIdTransformer } from '../value-objects/telegramId.transformer'
 import { TelegramId } from '../value-objects/telegramId.value-object'
 
 @ObjectType()
+@Directive('@key(fields: "id")')
 @Entity({ name: 'users' })
 export class User {
 	@Field(() => ID)

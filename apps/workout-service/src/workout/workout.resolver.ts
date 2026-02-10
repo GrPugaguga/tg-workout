@@ -1,3 +1,5 @@
+import { AuthenticatedGuard, CurrentUser, FederationUser } from '@app/core'
+import { UseGuards } from '@nestjs/common'
 import { Args, ID, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
 
 import { AddExerciseInput } from './dto/add-exercise.input'
@@ -14,28 +16,32 @@ export class WorkoutResolver {
 		private readonly queryService: WorkoutQueryService
 	) {}
 
+	@UseGuards(AuthenticatedGuard)
 	@Query(() => Workout, { name: 'workout' })
 	getWorkout(@Args('id', { type: () => ID }) id: string) {
 		return this.queryService.getWorkout(id)
 	}
 
+	@UseGuards(AuthenticatedGuard)
 	@Query(() => [Workout], { name: 'myWorkouts' })
 	getMyWorkouts(
-		@Args('userId') userId: string,
+		@CurrentUser() user: FederationUser,
 		@Args('pagination', { nullable: true })
 		pagination: PaginationInput = new PaginationInput()
 	) {
-		return this.queryService.getUserWorkouts(userId, pagination)
+		return this.queryService.getUserWorkouts(user.id, pagination)
 	}
 
+	@UseGuards(AuthenticatedGuard)
 	@Mutation(() => Workout)
 	createWorkout(
-		@Args('userId') userId: string,
+		@CurrentUser() user: FederationUser,
 		@Args('input') input: CreateWorkoutInput
 	) {
-		return this.commandService.createWorkout(userId, input)
+		return this.commandService.createWorkout(user.id, input)
 	}
 
+	@UseGuards(AuthenticatedGuard)
 	@Mutation(() => Workout)
 	addExercise(
 		@Args('workoutId', { type: () => ID }) workoutId: string,
@@ -44,6 +50,7 @@ export class WorkoutResolver {
 		return this.commandService.addExercise(workoutId, input)
 	}
 
+	@UseGuards(AuthenticatedGuard)
 	@Mutation(() => Workout)
 	removeExercise(
 		@Args('workoutId', { type: () => ID }) workoutId: string,
@@ -52,6 +59,7 @@ export class WorkoutResolver {
 		return this.commandService.removeExercise(workoutId, exerciseId)
 	}
 
+	@UseGuards(AuthenticatedGuard)
 	@Mutation(() => Boolean)
 	deleteWorkout(@Args('id', { type: () => ID }) id: string) {
 		return this.commandService.deleteWorkout(id)

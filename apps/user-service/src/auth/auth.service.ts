@@ -8,7 +8,12 @@ import { UsersService } from '../users/users.service'
 
 import { JwtResponseDto } from './dto/jwt-response.dto'
 import { TelegramUserDto } from './dto/telegramUser.dto'
-import { JwtPayload } from './strategies/jwt.strategy'
+
+interface JwtPayload {
+	sub: string
+	telegramId: number
+	username: string | undefined
+}
 
 @Injectable()
 export class AuthService {

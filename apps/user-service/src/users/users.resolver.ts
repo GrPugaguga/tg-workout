@@ -1,8 +1,13 @@
+import { AuthenticatedGuard, CurrentUser, FederationUser } from '@app/core'
 import { UseGuards } from '@nestjs/common'
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+import {
+	Args,
+	Mutation,
+	Query,
+	Resolver,
+	ResolveReference
+} from '@nestjs/graphql'
 
-import { CurrentUser } from '../auth/decorators/current-user.decorator'
-import { JWTAuthGuard } from '../auth/guards/jwt-auth.guard'
 import { OnlySelfGuard } from '../auth/guards/only-self.guard'
 
 import { CreateUserInput } from './dto/create-user.input'
@@ -13,15 +18,20 @@ import { UsersService } from './users.service'
 export class UsersResolver {
 	constructor(private readonly usersService: UsersService) {}
 
+	@ResolveReference()
+	resolveReference(reference: { __typename: string; id: string }) {
+		return this.usersService.findOne(reference.id)
+	}
+
 	@Mutation(() => User)
 	createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
 		return this.usersService.create(createUserInput)
 	}
 
-	@UseGuards(JWTAuthGuard)
+	@UseGuards(AuthenticatedGuard)
 	@Query(() => User, { name: 'me' })
-	me(@CurrentUser() user: User) {
-		return user
+	me(@CurrentUser() user: FederationUser) {
+		return this.usersService.findOne(user.id)
 	}
 
 	@Query(() => User, { name: 'userByTelegramId' })
@@ -29,7 +39,7 @@ export class UsersResolver {
 		return this.usersService.findByTg(telegramId)
 	}
 
-	@UseGuards(JWTAuthGuard, OnlySelfGuard)
+	@UseGuards(AuthenticatedGuard, OnlySelfGuard)
 	@Mutation(() => User)
 	removeUser(@Args('id') id: string) {
 		return this.usersService.remove(id)

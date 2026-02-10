@@ -27,6 +27,7 @@ import { WorkoutResolver } from './workout.resolver'
 			provide: WorkoutRepositoryPort,
 			useClass: WorkoutRepository
 		}
-	]
+	],
+	exports: [WorkoutQueryService]
 })
 export class WorkoutModule {}

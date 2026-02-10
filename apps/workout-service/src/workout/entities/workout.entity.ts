@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql'
+import { Directive, Field, ID, ObjectType } from '@nestjs/graphql'
 import {
 	Column,
 	CreateDateColumn,
@@ -11,6 +11,7 @@ import {
 import { WorkoutExercise } from './workout-exercise.entity'
 
 @ObjectType()
+@Directive('@key(fields: "id")')
 @Entity({ name: 'workouts' })
 export class Workout {
 	@Field(() => ID)

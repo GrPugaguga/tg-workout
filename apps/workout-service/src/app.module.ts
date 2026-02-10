@@ -1,9 +1,14 @@
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
+import {
+	ApolloFederationDriver,
+	ApolloFederationDriverConfig
+} from '@nestjs/apollo'
 import { Module } from '@nestjs/common'
 import { EventEmitterModule } from '@nestjs/event-emitter'
 import { GraphQLModule } from '@nestjs/graphql'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
+import { CommonModule } from './common/common.module'
+import { User } from './common/entities/user.reference'
 import dataSource from './data-source'
 import { ExerciseModule } from './exercise/exercise.module'
 import { HealthModule } from './health/health.module'
@@ -13,13 +18,17 @@ import { WorkoutModule } from './workout/workout.module'
 	imports: [
 		EventEmitterModule.forRoot(),
 		TypeOrmModule.forRoot({ ...dataSource.options, migrations: [] }),
-		GraphQLModule.forRoot<ApolloDriverConfig>({
-			driver: ApolloDriver,
-			autoSchemaFile: true
+		GraphQLModule.forRoot<ApolloFederationDriverConfig>({
+			driver: ApolloFederationDriver,
+			autoSchemaFile: { federation: 2 },
+			buildSchemaOptions: {
+				orphanedTypes: [User]
+			}
 		}),
 		WorkoutModule,
 		ExerciseModule,
-		HealthModule
+		HealthModule,
+		CommonModule
 	]
 })
 export class WorkoutServiceModule {}
