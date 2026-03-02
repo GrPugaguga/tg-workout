@@ -8,9 +8,11 @@ import { ExerciseResolver } from './exercise.resolver'
 import { ExerciseService } from './exercise.service'
 import { ExerciseRepository } from './repository/exercise.repository'
 import { ExerciseRepositoryPort } from './repository/exercise.repository.abstract'
+import { ExerciseHandler } from './exercise.handler'
 
 @Module({
 	imports: [TypeOrmModule.forFeature([Exercise, MuscleGroup, Equipment])],
+	controllers: [ExerciseHandler],
 	providers: [
 		ExerciseResolver,
 		ExerciseService,

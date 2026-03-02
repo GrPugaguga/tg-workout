@@ -22,3 +22,5 @@ export class ExerciseResolver {
 		return this.exerciseService.search(query)
 	}
 }
+
+
