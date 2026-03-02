@@ -2,6 +2,7 @@ import { ENV } from '@app/core'
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { createHmac } from 'crypto'
+import { parse, isValid } from '@tma.js/init-data-node'
 
 import { User } from '../users/entities/user.entity'
 import { UsersService } from '../users/users.service'
@@ -48,31 +49,17 @@ export class AuthService {
 	}
 
 	async validateTelegramInitData(initData: string): Promise<TelegramUserDto> {
-		const params = new URLSearchParams(initData)
-		const hash = params.get('hash')
-		params.delete('hash')
-
-		const dataCheckString = Array.from(params.entries())
-			.sort(([a], [b]) => a.localeCompare(b))
-			.map(([key, value]) => `${key}=${value}`)
-			.join('\n')
-
-		const secretKey = createHmac('sha256', 'WebAppData')
-			.update(ENV.BOT_TOKEN)
-			.digest()
-
-		const calculatedHash = createHmac('sha256', secretKey)
-			.update(dataCheckString)
-			.digest('hex')
-
-		if (calculatedHash !== hash) {
-			throw new UnauthorizedException('Invalid Telegram signature')
+		
+		if (!isValid(initData, ENV.BOT_TOKEN)) {
+			throw new UnauthorizedException('Invalid Telegram init data')
 		}
 
-		const userJson = params.get('user')
+		const params = parse(initData)
+
+		const userJson = params.user
 
 		if (!userJson) throw new UnauthorizedException('User data not found')
 
-		return JSON.parse(userJson)
+		return userJson
 	}
 }
