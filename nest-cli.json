@@ -46,6 +46,24 @@
         "tsConfigPath": "apps/gateway/tsconfig.app.json"
       }
     },
+    "parsing-service": {
+      "type": "application",
+      "root": "apps/parsing-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/parsing-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/parsing-service/tsconfig.app.json"
+      }
+    },
+    "sync-service": {
+      "type": "application",
+      "root": "apps/sync-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/sync-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/sync-service/tsconfig.app.json"
+      }
+    },
     "tg-workout-mono": {
       "type": "application",
       "root": "apps/tg-workout-mono",
@@ -62,6 +80,15 @@
       "sourceRoot": "apps/user-service/src",
       "compilerOptions": {
         "tsConfigPath": "apps/user-service/tsconfig.app.json"
+      }
+    },
+    "typesense": {
+      "type": "library",
+      "root": "libs/typesense",
+      "entryFile": "index",
+      "sourceRoot": "libs/typesense/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/typesense/tsconfig.lib.json"
       }
     },
     "utils": {

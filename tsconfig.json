@@ -50,6 +50,12 @@
       ],
       "@app/utils/*": [
         "libs/utils/src/*"
+      ],
+      "@app/typesense": [
+        "libs/typesense/src"
+      ],
+      "@app/typesense/*": [
+        "libs/typesense/src/*"
       ]
     }
   }
