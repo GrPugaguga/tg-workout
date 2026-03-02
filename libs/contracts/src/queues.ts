@@ -5,4 +5,5 @@ export const QUEUES = {
 
 export const CLIENTS = {
 	WORKOUT_SERVICE: 'WORKOUT_SERVICE',
+	SYNC_SERVICE: 'SYNC_SERVICE',
 } as const

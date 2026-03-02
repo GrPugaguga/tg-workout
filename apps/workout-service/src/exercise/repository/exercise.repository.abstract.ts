@@ -7,4 +7,5 @@ export abstract class ExerciseRepositoryPort {
 	abstract search(query: string): Promise<Exercise[]>
 	abstract findAll(): Promise<Exercise[]>
 	abstract save(exercise: Exercise): Promise<Exercise>
+	abstract delete(id: string): Promise<void>
 }

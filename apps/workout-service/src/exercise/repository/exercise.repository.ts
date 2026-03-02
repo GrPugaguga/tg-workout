@@ -58,4 +58,8 @@ export class ExerciseRepository extends ExerciseRepositoryPort {
 	async save(exercise: Exercise): Promise<Exercise> {
 		return this.repo.save(exercise)
 	}
+
+	async delete(id: string): Promise<void> {
+		await this.repo.delete(id)
+	}
 }
