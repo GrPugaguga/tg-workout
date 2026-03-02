@@ -36,6 +36,14 @@ export class ExerciseService {
 		return this.exerciseRepository.search(query)
 	}
 
+	async findAllMuscleGroups(): Promise<MuscleGroup[]> {
+		return this.muscleGroupRepo.find()
+	}
+
+	async findAllEquipment(): Promise<Equipment[]> {
+		return this.equipmentRepo.find()
+	}
+
 	async create(input: CreateExerciseInput): Promise<Exercise> {
 		const muscleGroups = await this.muscleGroupRepo.findBy({ id: In(input.muscleGroupIds) })
 		const equipment = await this.equipmentRepo.findBy({ id: In(input.equipmentIds) })
