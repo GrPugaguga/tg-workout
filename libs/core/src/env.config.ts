@@ -45,7 +45,10 @@ const envSchema = z.object({
 	BOT_TOKEN: z.string(),
 
 	JWT_SECRET: z.string(),
-	JWT_EXPIRES_IN: z.coerce.number().default(86400)
+	JWT_EXPIRES_IN: z.coerce.number().default(86400),
+
+	TYPESENSE_API_KEY: z.string(),
+	TYPESENSE_URL: z.string(),
 })
 
 export const ENV = envSchema.parse(process.env)
