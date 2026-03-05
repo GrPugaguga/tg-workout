@@ -46,210 +46,203 @@ async function seed() {
 	const exercises: Partial<Exercise>[] = [
 		// Chest
 		{
-			name: 'Жим штанги лёжа',
-			description: 'Базовое упражнение на грудные мышцы',
-			aliases: ['bench press', 'жим лёжа', 'жим лежа'],
+			name: 'Bench Press',
+			description: 'Compound pressing movement for chest',
+			aliases: ['жим лёжа', 'жим лежа', 'жим штанги лёжа', 'жим гантелей лёжа', 'жим гантелей'],
 			muscleGroups: [mg.chest, mg.triceps],
-			equipment: [eq.barbell]
+			equipment: [eq.barbell, eq.dumbbell]
 		},
 		{
-			name: 'Жим гантелей лёжа',
-			description: 'Жим лёжа с гантелями',
-			aliases: ['dumbbell bench press', 'жим гантелей'],
-			muscleGroups: [mg.chest, mg.triceps],
-			equipment: [eq.dumbbell]
-		},
-		{
-			name: 'Жим на наклонной скамье',
-			description: 'Жим штанги на наклонной скамье вверх',
-			aliases: ['incline bench press', 'наклонный жим'],
+			name: 'Incline Bench Press',
+			description: 'Pressing on an incline bench targeting upper chest',
+			aliases: ['наклонный жим', 'жим на наклонной скамье', 'жим на наклонной'],
 			muscleGroups: [mg.chest, mg.shoulders],
 			equipment: [eq.barbell, eq.dumbbell]
 		},
 		{
-			name: 'Отжимания',
-			description: 'Отжимания от пола',
-			aliases: ['push-ups', 'отжимания от пола'],
+			name: 'Push-Up',
+			description: 'Bodyweight pressing exercise',
+			aliases: ['отжимания', 'отжимания от пола'],
 			muscleGroups: [mg.chest, mg.triceps],
 			equipment: [eq.bodyweight]
 		},
 		{
-			name: 'Разводка гантелей',
-			description: 'Разведение рук с гантелями лёжа',
-			aliases: ['dumbbell flyes', 'разводка'],
+			name: 'Dumbbell Fly',
+			description: 'Chest isolation with dumbbells',
+			aliases: ['разводка', 'разводка гантелей'],
 			muscleGroups: [mg.chest],
 			equipment: [eq.dumbbell]
 		},
 		{
-			name: 'Сведение в кроссовере',
-			description: 'Сведение рук в кроссовере',
-			aliases: ['cable crossover', 'кроссовер на грудь'],
+			name: 'Cable Crossover',
+			description: 'Cable chest isolation movement',
+			aliases: ['кроссовер', 'сведение в кроссовере', 'кроссовер на грудь'],
 			muscleGroups: [mg.chest],
 			equipment: [eq.cable]
 		},
 
 		// Back
 		{
-			name: 'Подтягивания',
-			description: 'Подтягивания на перекладине',
-			aliases: ['pull-ups', 'подтяги'],
+			name: 'Pull-Up',
+			description: 'Bodyweight vertical pulling exercise',
+			aliases: ['подтягивания', 'подтяги'],
 			muscleGroups: [mg.back, mg.biceps],
 			equipment: [eq.bodyweight]
 		},
 		{
-			name: 'Становая тяга',
-			description: 'Классическая становая тяга',
-			aliases: ['deadlift', 'тяга', 'станина'],
+			name: 'Deadlift',
+			description: 'Compound full-body pulling from the floor',
+			aliases: ['становая тяга', 'тяга', 'станина', 'становая'],
 			muscleGroups: [mg.back, mg.legs, mg.glutes],
 			equipment: [eq.barbell]
 		},
 		{
-			name: 'Тяга штанги в наклоне',
-			description: 'Тяга штанги к поясу в наклоне',
-			aliases: ['barbell row', 'тяга в наклоне'],
+			name: 'Barbell Row',
+			description: 'Barbell bent-over row',
+			aliases: ['тяга штанги в наклоне', 'тяга в наклоне', 'тяга штанги'],
 			muscleGroups: [mg.back],
 			equipment: [eq.barbell]
 		},
 		{
-			name: 'Тяга верхнего блока',
-			description: 'Тяга верхнего блока к груди',
-			aliases: ['lat pulldown', 'верхний блок', 'тяга блока'],
+			name: 'Lat Pulldown',
+			description: 'Cable lat pulldown to chest',
+			aliases: ['тяга верхнего блока', 'верхний блок', 'тяга блока'],
 			muscleGroups: [mg.back],
 			equipment: [eq.cable]
 		},
 		{
-			name: 'Тяга гантели в наклоне',
-			description: 'Тяга гантели одной рукой в наклоне',
-			aliases: ['dumbbell row', 'тяга гантели'],
+			name: 'Dumbbell Row',
+			description: 'Single-arm dumbbell row',
+			aliases: ['тяга гантели', 'тяга гантели в наклоне'],
 			muscleGroups: [mg.back],
 			equipment: [eq.dumbbell]
 		},
 		{
-			name: 'Тяга нижнего блока',
-			description: 'Горизонтальная тяга нижнего блока',
-			aliases: ['seated cable row', 'нижний блок', 'горизонтальная тяга'],
+			name: 'Seated Cable Row',
+			description: 'Horizontal cable row',
+			aliases: ['тяга нижнего блока', 'нижний блок', 'горизонтальная тяга'],
 			muscleGroups: [mg.back],
 			equipment: [eq.cable]
 		},
 
 		// Legs
 		{
-			name: 'Приседания со штангой',
-			description: 'Классические приседания со штангой на плечах',
-			aliases: ['squat', 'присед', 'приседания'],
+			name: 'Squat',
+			description: 'Compound lower body exercise',
+			aliases: ['присед', 'приседания', 'приседания со штангой'],
 			muscleGroups: [mg.legs, mg.glutes, mg.core],
 			equipment: [eq.barbell]
 		},
 		{
-			name: 'Жим ногами',
-			description: 'Жим ногами в тренажёре',
-			aliases: ['leg press', 'жим платформы'],
+			name: 'Leg Press',
+			description: 'Machine pressing for legs',
+			aliases: ['жим ногами', 'жим платформы'],
 			muscleGroups: [mg.legs, mg.glutes],
 			equipment: [eq.machine]
 		},
 		{
-			name: 'Выпады',
-			description: 'Выпады с гантелями или штангой',
-			aliases: ['lunges', 'выпады вперёд'],
+			name: 'Lunge',
+			description: 'Unilateral leg exercise',
+			aliases: ['выпады', 'выпады вперёд'],
 			muscleGroups: [mg.legs, mg.glutes],
 			equipment: [eq.dumbbell, eq.barbell, eq.bodyweight]
 		},
 		{
-			name: 'Разгибание ног',
-			description: 'Разгибание ног в тренажёре',
-			aliases: ['leg extension', 'разгибание'],
+			name: 'Leg Extension',
+			description: 'Machine quad isolation',
+			aliases: ['разгибание ног', 'разгибание'],
 			muscleGroups: [mg.legs],
 			equipment: [eq.machine]
 		},
 		{
-			name: 'Сгибание ног',
-			description: 'Сгибание ног лёжа в тренажёре',
-			aliases: ['leg curl', 'сгибание лёжа'],
+			name: 'Leg Curl',
+			description: 'Machine hamstring isolation',
+			aliases: ['сгибание ног', 'сгибание лёжа'],
 			muscleGroups: [mg.legs],
 			equipment: [eq.machine]
 		},
 		{
-			name: 'Румынская тяга',
-			description: 'Румынская становая тяга на прямых ногах',
-			aliases: ['romanian deadlift', 'RDL', 'мёртвая тяга'],
+			name: 'Romanian Deadlift',
+			description: 'Hip hinge targeting hamstrings and glutes',
+			aliases: ['румынская тяга', 'RDL', 'мёртвая тяга', 'румынка'],
 			muscleGroups: [mg.legs, mg.glutes, mg.back],
 			equipment: [eq.barbell, eq.dumbbell]
 		},
 
 		// Shoulders
 		{
-			name: 'Жим штанги стоя',
-			description: 'Армейский жим штанги над головой',
-			aliases: ['overhead press', 'армейский жим', 'жим стоя'],
+			name: 'Overhead Press',
+			description: 'Standing barbell press overhead',
+			aliases: ['жим стоя', 'армейский жим', 'жим штанги стоя'],
 			muscleGroups: [mg.shoulders, mg.triceps],
 			equipment: [eq.barbell]
 		},
 		{
-			name: 'Жим гантелей сидя',
-			description: 'Жим гантелей над головой сидя',
-			aliases: ['dumbbell shoulder press', 'жим сидя'],
+			name: 'Seated Dumbbell Press',
+			description: 'Seated dumbbell shoulder press',
+			aliases: ['жим гантелей сидя', 'жим сидя', 'жим гантелей над головой'],
 			muscleGroups: [mg.shoulders],
 			equipment: [eq.dumbbell]
 		},
 		{
-			name: 'Махи гантелями в стороны',
-			description: 'Подъём гантелей через стороны',
-			aliases: ['lateral raise', 'махи в стороны', 'разводка стоя'],
+			name: 'Lateral Raise',
+			description: 'Dumbbell side raises for lateral delts',
+			aliases: ['махи в стороны', 'махи гантелями', 'разводка стоя'],
 			muscleGroups: [mg.shoulders],
 			equipment: [eq.dumbbell]
 		},
 
 		// Biceps
 		{
-			name: 'Подъём штанги на бицепс',
-			description: 'Сгибание рук со штангой стоя',
-			aliases: ['barbell curl', 'бицепс со штангой', 'подъём на бицепс'],
+			name: 'Barbell Curl',
+			description: 'Standing barbell curl',
+			aliases: ['подъём штанги на бицепс', 'бицепс со штангой', 'подъём на бицепс'],
 			muscleGroups: [mg.biceps],
 			equipment: [eq.barbell, eq['ez-bar']]
 		},
 		{
-			name: 'Подъём гантелей на бицепс',
-			description: 'Сгибание рук с гантелями',
-			aliases: ['dumbbell curl', 'бицепс с гантелями', 'молотки'],
+			name: 'Dumbbell Curl',
+			description: 'Dumbbell bicep curl',
+			aliases: ['подъём гантелей на бицепс', 'бицепс с гантелями', 'молотки'],
 			muscleGroups: [mg.biceps],
 			equipment: [eq.dumbbell]
 		},
 
 		// Triceps
 		{
-			name: 'Французский жим',
-			description: 'Разгибание рук со штангой лёжа',
-			aliases: ['skull crusher', 'французский', 'трицепс лёжа'],
+			name: 'Skull Crusher',
+			description: 'Lying tricep extension',
+			aliases: ['французский жим', 'французский', 'трицепс лёжа'],
 			muscleGroups: [mg.triceps],
 			equipment: [eq.barbell, eq['ez-bar']]
 		},
 		{
-			name: 'Отжимания на брусьях',
-			description: 'Отжимания на параллельных брусьях',
-			aliases: ['dips', 'брусья'],
+			name: 'Dip',
+			description: 'Parallel bar dips',
+			aliases: ['отжимания на брусьях', 'брусья', 'дипы'],
 			muscleGroups: [mg.triceps, mg.chest],
 			equipment: [eq.bodyweight]
 		},
 		{
-			name: 'Разгибание рук на блоке',
-			description: 'Разгибание рук на верхнем блоке',
-			aliases: ['tricep pushdown', 'трицепс на блоке'],
+			name: 'Tricep Pushdown',
+			description: 'Cable tricep pushdown',
+			aliases: ['разгибание рук на блоке', 'трицепс на блоке'],
 			muscleGroups: [mg.triceps],
 			equipment: [eq.cable]
 		},
 
 		// Core
 		{
-			name: 'Планка',
-			description: 'Статическое удержание в упоре лёжа',
-			aliases: ['plank', 'планка на локтях'],
+			name: 'Plank',
+			description: 'Isometric core hold',
+			aliases: ['планка', 'планка на локтях'],
 			muscleGroups: [mg.core],
 			equipment: [eq.bodyweight]
 		},
 		{
-			name: 'Скручивания',
-			description: 'Скручивания на пресс лёжа',
-			aliases: ['crunches', 'пресс'],
+			name: 'Crunch',
+			description: 'Abdominal crunch',
+			aliases: ['скручивания', 'пресс'],
 			muscleGroups: [mg.core],
 			equipment: [eq.bodyweight]
 		}
