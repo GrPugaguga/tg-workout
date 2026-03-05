@@ -12,10 +12,21 @@ export const exerciseCollection = collection({
 	]
 })
 
+export const equipmentCollection = collection({
+	name: 'equipment',
+	fields: [
+		{ name: 'id',      type: 'string' },
+		{ name: 'name',    type: 'string' },
+		{ name: 'aliases', type: 'string[]', optional: true },
+	]
+})
+
 declare module "typesense-ts" {
   interface Collections {
     exercises: typeof exerciseCollection.schema;
+    equipment: typeof equipmentCollection.schema;
   }
 }
 
 export type ExerciseDocument = typeof exerciseCollection.infer
+export type EquipmentDocument = typeof equipmentCollection.infer

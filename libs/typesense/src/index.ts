@@ -1,2 +1,2 @@
 export { initTypesense } from './config'
-export { exerciseCollection, type ExerciseDocument } from './schema'
+export { exerciseCollection, equipmentCollection, type ExerciseDocument, type EquipmentDocument } from './schema'
