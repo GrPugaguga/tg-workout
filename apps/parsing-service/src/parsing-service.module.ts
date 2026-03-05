@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common'
 
 import { ParsingServiceController } from './parsing-service.controller'
 import { ParsingServiceService } from './parsing-service.service'
-import { AI_MODEL_NAMES, AI_MODELS, OpenAIModel } from 'libs/ai_models/src'
+import { AI_MODEL_NAMES, AI_MODELS, OpenAIModel } from '@app/ai_models'
 
 @Module({
 	controllers: [ParsingServiceController],

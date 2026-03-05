@@ -6,6 +6,8 @@ export class ParseWorkoutDto {
 export class ParsedExercise {
 	exerciseId!: string
 	exerciseName!: string
+	equipmentId?: string
+	equipmentName?: string
 	sets!: ParsedSet[]
 }
 
