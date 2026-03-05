@@ -50,6 +50,10 @@ ${equipmentList}
 - "weight" is in kg, omit if not mentioned
 - "reps" is the number of repetitions per set, omit if not mentioned
 - "duration" in seconds can be used instead of reps for timed exercises (e.g. plank)
+- For cardio exercises (running, cycling, etc.) use: { "sets": 1, "reps": 1, "duration": <seconds> }
+  If no time is given, use { "sets": 1, "reps": 1 }
+- "sets" array MUST always be present and non-empty — minimum is [{ "sets": 1, "reps": 1 }]
+- "sets" (number of sets) defaults to 1, "reps" defaults to 1 — always include both
 - Do NOT expand identical sets into separate objects — keep them grouped
 - Ignore warm-up notes, comments, or anything that is not an exercise
 - If the exercise is not in the list, use your best guess for an English name
