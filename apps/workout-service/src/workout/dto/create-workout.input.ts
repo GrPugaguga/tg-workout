@@ -12,17 +12,24 @@ import {
 
 @InputType()
 export class CreateWorkoutSetInput {
+	@IsOptional()
 	@IsNumber()
-	@Field(() => Float)
-	weight!: number
+	@Field(() => Float, { nullable: true })
+	weight?: number
 
 	@IsNumber()
 	@Field(() => Int, { defaultValue: 1 })
 	sets: number = 1
 
+	@IsOptional()
 	@IsNumber()
-	@Field(() => Int)
-	reps!: number
+	@Field(() => Int, { nullable: true })
+	reps?: number
+
+	@IsOptional()
+	@IsNumber()
+	@Field(() => Int, { nullable: true })
+	duration?: number
 }
 
 @InputType()

@@ -23,15 +23,19 @@ export class WorkoutSet {
 	@Column()
 	setNumber!: number
 
-	@Field(() => Float)
-	@Column({ type: 'decimal', precision: 6, scale: 2 })
-	weight!: number
+	@Field(() => Float, { nullable: true })
+	@Column({ type: 'decimal', precision: 6, scale: 2, nullable: true })
+	weight?: number
 
 	@Field(() => Int)
 	@Column({ default: 1 })
 	sets!: number
 
-	@Field(() => Int)
-	@Column()
-	reps!: number
+	@Field(() => Int, { nullable: true })
+	@Column({ nullable: true })
+	reps?: number
+
+	@Field(() => Int, { nullable: true })
+	@Column({ nullable: true })
+	duration?: number
 }
