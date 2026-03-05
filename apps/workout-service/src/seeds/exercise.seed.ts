@@ -23,7 +23,8 @@ async function seed() {
 		{ name: 'glutes', aliases: ['ягодицы', 'ягодичные', 'попа'] },
 		{ name: 'forearms', aliases: ['предплечья', 'хват'] },
 		{ name: 'traps', aliases: ['трапеция', 'трапы'] },
-		{ name: 'calves', aliases: ['икры', 'голень'] }
+		{ name: 'calves', aliases: ['икры', 'голень'] },
+		{ name: 'cardio', aliases: ['кардио', 'выносливость'] }
 	])
 
 	const mg = Object.fromEntries(muscleGroups.map(m => [m.name, m]))
@@ -245,6 +246,43 @@ async function seed() {
 			aliases: ['скручивания', 'пресс'],
 			muscleGroups: [mg.core],
 			equipment: [eq.bodyweight]
+		},
+
+		// Cardio
+		{
+			name: 'Running',
+			description: 'Outdoor or treadmill running',
+			aliases: ['бег', 'пробежка', 'беговая дорожка'],
+			muscleGroups: [mg.cardio, mg.legs],
+			equipment: []
+		},
+		{
+			name: 'Cycling',
+			description: 'Stationary bike or outdoor cycling',
+			aliases: ['велосипед', 'велотренажёр', 'велик'],
+			muscleGroups: [mg.cardio, mg.legs],
+			equipment: [eq.machine]
+		},
+		{
+			name: 'Jump Rope',
+			description: 'Skipping rope cardio exercise',
+			aliases: ['скакалка', 'прыжки на скакалке'],
+			muscleGroups: [mg.cardio, mg.calves],
+			equipment: []
+		},
+		{
+			name: 'Rowing',
+			description: 'Rowing machine cardio',
+			aliases: ['гребля', 'гребной тренажёр'],
+			muscleGroups: [mg.cardio, mg.back],
+			equipment: [eq.machine]
+		},
+		{
+			name: 'Warm-Up',
+			description: 'General warm-up / stretching',
+			aliases: ['разминка', 'растяжка', 'заминка'],
+			muscleGroups: [],
+			equipment: []
 		}
 	]
 
