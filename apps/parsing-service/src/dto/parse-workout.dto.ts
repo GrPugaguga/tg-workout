@@ -10,6 +10,7 @@ export class ParsedExercise {
 }
 
 export class ParsedSet {
+	sets!: number
 	reps?: number
 	weight?: number
 	duration?: number

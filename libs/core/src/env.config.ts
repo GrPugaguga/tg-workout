@@ -49,6 +49,8 @@ const envSchema = z.object({
 
 	TYPESENSE_API_KEY: z.string(),
 	TYPESENSE_URL: z.string(),
+
+	OPENAI_API_KEY: z.string(),
 })
 
 export const ENV = envSchema.parse(process.env)

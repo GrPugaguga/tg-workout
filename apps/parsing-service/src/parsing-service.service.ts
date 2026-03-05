@@ -1,11 +1,16 @@
 import { exerciseCollection } from '@app/typesense'
-import { Injectable, Logger } from '@nestjs/common'
+import { Inject, Injectable, Logger } from '@nestjs/common'
 
 import { ParsedWorkoutResult, ParseWorkoutDto } from './dto/parse-workout.dto'
+import { AI_MODELS, AiModel } from 'libs/ai_models/src'
 
 @Injectable()
 export class ParsingServiceService {
 	private readonly logger = new Logger(ParsingServiceService.name)
+
+	constructor(
+		@Inject(AI_MODELS.PARSER) private readonly ai: AiModel
+	){}
 
 	async parse(dto: ParseWorkoutDto): Promise<ParsedWorkoutResult> {
 		this.logger.log(`Parsing workout for user ${dto.userId}`)
