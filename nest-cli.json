@@ -52,6 +52,7 @@
       "entryFile": "main",
       "sourceRoot": "apps/parsing-service/src",
       "compilerOptions": {
+        "webpack": false,
         "tsConfigPath": "apps/parsing-service/tsconfig.app.json"
       }
     },
@@ -61,6 +62,7 @@
       "entryFile": "main",
       "sourceRoot": "apps/sync-service/src",
       "compilerOptions": {
+        "webpack": false,
         "tsConfigPath": "apps/sync-service/tsconfig.app.json"
       }
     },
@@ -98,6 +100,15 @@
       "sourceRoot": "libs/utils/src",
       "compilerOptions": {
         "tsConfigPath": "libs/utils/tsconfig.lib.json"
+      }
+    },
+    "ai_models": {
+      "type": "library",
+      "root": "libs/ai_models",
+      "entryFile": "index",
+      "sourceRoot": "libs/ai_models/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/ai_models/tsconfig.lib.json"
       }
     },
     "workout-service": {

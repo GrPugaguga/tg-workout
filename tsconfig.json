@@ -56,6 +56,12 @@
       ],
       "@app/typesense/*": [
         "libs/typesense/src/*"
+      ],
+      "@app/ai_models": [
+        "libs/ai_models/src"
+      ],
+      "@app/ai_models/*": [
+        "libs/ai_models/src/*"
       ]
     }
   }

@@ -61,3 +61,6 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 *.d.ts
 dist/
 build/
+
+# Typesense local data
+typesense-data/
