@@ -1,4 +1,7 @@
+import { ENV } from '@app/core'
+import { CLIENTS, QUEUES } from '@app/contracts'
 import { Module } from '@nestjs/common'
+import { ClientsModule, Transport } from '@nestjs/microservices'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
 import { ExerciseModule } from '../exercise/exercise.module'
@@ -16,7 +19,18 @@ import { WorkoutResolver } from './workout.resolver'
 @Module({
 	imports: [
 		TypeOrmModule.forFeature([Workout, WorkoutExercise, WorkoutSet]),
-		ExerciseModule
+		ExerciseModule,
+		ClientsModule.register([
+			{
+				name: CLIENTS.PARSING_SERVICE,
+				transport: Transport.RMQ,
+				options: {
+					urls: [ENV.RABBITMQ_URL],
+					queue: QUEUES.PARSING,
+					queueOptions: { durable: true },
+				},
+			},
+		]),
 	],
 	providers: [
 		WorkoutResolver,

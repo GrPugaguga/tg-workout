@@ -5,6 +5,7 @@ import { Args, ID, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { AddExerciseInput } from './dto/add-exercise.input'
 import { CreateWorkoutInput } from './dto/create-workout.input'
 import { PaginationInput } from './dto/pagination.input'
+import { ParsedWorkoutResultType } from './dto/parsed-workout-result.type'
 import { Workout } from './entities/workout.entity'
 import { WorkoutCommandService } from './workout-command.service'
 import { WorkoutQueryService } from './workout-query.service'
@@ -63,5 +64,14 @@ export class WorkoutResolver {
 	@Mutation(() => Boolean)
 	deleteWorkout(@Args('id', { type: () => ID }) id: string) {
 		return this.commandService.deleteWorkout(id)
+	}
+
+	@UseGuards(AuthenticatedGuard)
+	@Mutation(() => ParsedWorkoutResultType)
+	parseWorkout(
+		@CurrentUser() user: FederationUser,
+		@Args('text') text: string,
+	) {
+		return this.commandService.parseWorkout(user.id, text)
 	}
 }

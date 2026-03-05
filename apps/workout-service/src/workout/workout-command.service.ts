@@ -1,5 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { CLIENTS, WORKOUT_PATTERNS } from '@app/contracts'
+import { Inject, Injectable, NotFoundException } from '@nestjs/common'
+import { ClientProxy } from '@nestjs/microservices'
 import { EventEmitter2 } from '@nestjs/event-emitter'
+import { firstValueFrom } from 'rxjs'
 
 import { ExerciseService } from '../exercise/exercise.service'
 
@@ -20,7 +23,8 @@ export class WorkoutCommandService {
 	constructor(
 		private readonly workoutRepository: WorkoutRepositoryPort,
 		private readonly exerciseService: ExerciseService,
-		private readonly eventEmitter: EventEmitter2
+		private readonly eventEmitter: EventEmitter2,
+		@Inject(CLIENTS.PARSING_SERVICE) private readonly parsingClient: ClientProxy,
 	) {}
 
 	async createWorkout(
@@ -142,6 +146,12 @@ export class WorkoutCommandService {
 		}
 
 		return result
+	}
+
+	async parseWorkout(userId: string, text: string) {
+		return firstValueFrom(
+			this.parsingClient.send(WORKOUT_PATTERNS.PARSE, { userId, text }),
+		)
 	}
 
 	private async getWorkoutOrFail(id: string): Promise<Workout> {
