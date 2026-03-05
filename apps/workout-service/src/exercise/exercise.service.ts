@@ -1,5 +1,5 @@
 import { CLIENTS, EXERCISE_PATTERNS } from '@app/contracts'
-import { ExerciseDocument } from '@app/typesense'
+import type { ExerciseDocument } from '@app/typesense'
 import { Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { InjectRepository } from '@nestjs/typeorm'

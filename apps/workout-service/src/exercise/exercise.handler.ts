@@ -1,9 +1,9 @@
-import { ExerciseDocument } from '@app/typesense'
+import type { ExerciseDocument, EquipmentDocument } from '@app/typesense'
 import { Controller } from '@nestjs/common'
 import { MessagePattern } from '@nestjs/microservices'
 
 import { ExerciseService } from './exercise.service'
-import { EXERCISE_PATTERNS } from '@app/contracts'
+import { EXERCISE_PATTERNS, EQUIPMENT_PATTERNS } from '@app/contracts'
 
 @Controller()
 export class ExerciseHandler {
@@ -19,6 +19,16 @@ export class ExerciseHandler {
 			aliases: e.aliases ?? [],
 			muscleGroups: e.muscleGroups.map(mg => mg.name),
 			equipment: e.equipment.map(eq => eq.name),
+		}))
+	}
+
+	@MessagePattern(EQUIPMENT_PATTERNS.GET_ALL)
+	async handleGetAllEquipment(): Promise<EquipmentDocument[]> {
+		const equipment = await this.exerciseService.findAllEquipment()
+		return equipment.map(e => ({
+			id: e.id,
+			name: e.name,
+			aliases: e.aliases ?? [],
 		}))
 	}
 }
