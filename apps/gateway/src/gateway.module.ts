@@ -38,6 +38,10 @@ import { CorrelationIdMiddleware } from './middleware/correlation-id.middleware'
 						{
 							name: 'workouts',
 							url: `http://localhost:${ENV.WORKOUT_SERVICE_PORT}/graphql`
+						},
+						{
+							name: 'ai',
+							url: `http://localhost:${ENV.AI_SERVICE_PORT}/graphql`
 						}
 					]
 				}),
