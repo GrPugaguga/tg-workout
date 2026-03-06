@@ -1,5 +1,8 @@
+import { AiMessage } from "@app/ai_models"
+
 export class ParseWorkoutDto {
 	text!: string
+	history?: AiMessage[]
 	userId!: string
 }
 
