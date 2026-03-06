@@ -38,6 +38,8 @@ const envSchema = z.object({
 	WORKOUT_DB_PASSWORD: z.string(),
 	WORKOUT_SERVICE_PORT: z.coerce.number().default(3002),
 
+	AI_SERVICE_PORT: z.coerce.number().default(3003),
+
 	RABBIT_USER: z.string(),
 	RABBIT_PASSWORD: z.string(),
 	RABBITMQ_URL: z.string(),
