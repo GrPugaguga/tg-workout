@@ -10,6 +10,24 @@
   "monorepo": true,
   "root": "apps/tg-workout-mono",
   "projects": {
+    "ai-service": {
+      "type": "application",
+      "root": "apps/ai-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/ai-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/ai-service/tsconfig.app.json"
+      }
+    },
+    "ai_models": {
+      "type": "library",
+      "root": "libs/ai_models",
+      "entryFile": "index",
+      "sourceRoot": "libs/ai_models/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/ai_models/tsconfig.lib.json"
+      }
+    },
     "contracts": {
       "type": "library",
       "root": "libs/contracts",
@@ -75,15 +93,6 @@
         "tsConfigPath": "apps/tg-workout-mono/tsconfig.app.json"
       }
     },
-    "user-service": {
-      "type": "application",
-      "root": "apps/user-service",
-      "entryFile": "main",
-      "sourceRoot": "apps/user-service/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/user-service/tsconfig.app.json"
-      }
-    },
     "typesense": {
       "type": "library",
       "root": "libs/typesense",
@@ -93,6 +102,15 @@
         "tsConfigPath": "libs/typesense/tsconfig.lib.json"
       }
     },
+    "user-service": {
+      "type": "application",
+      "root": "apps/user-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/user-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/user-service/tsconfig.app.json"
+      }
+    },
     "utils": {
       "type": "library",
       "root": "libs/utils",
@@ -100,15 +118,6 @@
       "sourceRoot": "libs/utils/src",
       "compilerOptions": {
         "tsConfigPath": "libs/utils/tsconfig.lib.json"
-      }
-    },
-    "ai_models": {
-      "type": "library",
-      "root": "libs/ai_models",
-      "entryFile": "index",
-      "sourceRoot": "libs/ai_models/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/ai_models/tsconfig.lib.json"
       }
     },
     "workout-service": {

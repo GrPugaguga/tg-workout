@@ -27,6 +27,12 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
+      "@app/ai_models": [
+        "libs/ai_models/src"
+      ],
+      "@app/ai_models/*": [
+        "libs/ai_models/src/*"
+      ],
       "@app/contracts": [
         "libs/contracts/src"
       ],
@@ -45,23 +51,17 @@
       "@app/database/*": [
         "libs/database/src/*"
       ],
-      "@app/utils": [
-        "libs/utils/src"
-      ],
-      "@app/utils/*": [
-        "libs/utils/src/*"
-      ],
       "@app/typesense": [
         "libs/typesense/src"
       ],
       "@app/typesense/*": [
         "libs/typesense/src/*"
       ],
-      "@app/ai_models": [
-        "libs/ai_models/src"
+      "@app/utils": [
+        "libs/utils/src"
       ],
-      "@app/ai_models/*": [
-        "libs/ai_models/src/*"
+      "@app/utils/*": [
+        "libs/utils/src/*"
       ]
     }
   }
