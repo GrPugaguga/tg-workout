@@ -48,6 +48,17 @@ services:
       - ./typesense-data:/data
     command: '--data-dir /data --api-key=xyz --enable-cors'
 
+  redis:
+    image: redis:latest
+    container_name: redis
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_USER=${REDIS_USER}
+    ports:
+      - "${REDIS_PORT}:6379"
+    volumes:
+      - ./redisdata:/var/lib/redis/
+        
 
 networks:
   backend_network:

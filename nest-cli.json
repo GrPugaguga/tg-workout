@@ -28,6 +28,15 @@
         "tsConfigPath": "libs/ai_models/tsconfig.lib.json"
       }
     },
+    "bot-service": {
+      "type": "application",
+      "root": "apps/bot-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/bot-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/bot-service/tsconfig.app.json"
+      }
+    },
     "contracts": {
       "type": "library",
       "root": "libs/contracts",
