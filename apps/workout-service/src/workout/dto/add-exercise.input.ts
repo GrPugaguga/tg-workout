@@ -1,3 +1,4 @@
+import { CreateWorkoutSetInput } from '@app/contracts'
 import { Field, Float, InputType, Int } from '@nestjs/graphql'
 import { Type } from 'class-transformer'
 import {
@@ -9,7 +10,6 @@ import {
 	ValidateNested
 } from 'class-validator'
 
-import { CreateWorkoutSetInput } from './create-workout.input'
 
 @InputType()
 export class AddExerciseInput {

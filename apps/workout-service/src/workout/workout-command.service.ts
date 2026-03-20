@@ -1,4 +1,4 @@
-import { CLIENTS, WORKOUT_PATTERNS } from '@app/contracts'
+import { CLIENTS, CreateWorkoutInput, WORKOUT_PATTERNS } from '@app/contracts'
 import { Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 import { EventEmitter2 } from '@nestjs/event-emitter'
@@ -7,7 +7,6 @@ import { firstValueFrom } from 'rxjs'
 import { ExerciseService } from '../exercise/exercise.service'
 
 import { AddExerciseInput } from './dto/add-exercise.input'
-import { CreateWorkoutInput } from './dto/create-workout.input'
 import { WorkoutExercise } from './entities/workout-exercise.entity'
 import { WorkoutSet } from './entities/workout-set.entity'
 import { Workout } from './entities/workout.entity'

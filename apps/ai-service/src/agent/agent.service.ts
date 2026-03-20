@@ -1,8 +1,7 @@
 import { Injectable } from "@nestjs/common";
-import { AiResponseType } from "./dto/ai-response.type";
-import { SendMessageInput } from "./dto/send-message.input";
 import { FreeChatTool, OffTopTool, ParseWorkoutTool, SearchWorkoutTool, Tool, WorkoutHistoryTool } from "./tools";
 import { ClassifierService } from "./classifier/classifier.service";
+import { AiResponseType, SendMessageInput } from "@app/contracts";
 
 
 @Injectable()

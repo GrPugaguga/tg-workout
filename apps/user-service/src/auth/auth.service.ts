@@ -1,14 +1,13 @@
 import { ENV } from '@app/core'
-import { Injectable, UnauthorizedException } from '@nestjs/common'
+import { ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
-import { createHmac } from 'crypto'
 import { parse, isValid } from '@tma.js/init-data-node'
 
 import { User } from '../users/entities/user.entity'
 import { UsersService } from '../users/users.service'
 
-import { JwtResponseDto } from './dto/jwt-response.dto'
 import { TelegramUserDto } from './dto/telegramUser.dto'
+import { JwtResponseDto } from '@app/contracts'
 
 interface JwtPayload {
 	sub: string
@@ -45,6 +44,14 @@ export class AuthService {
 			lastName: telegramUser.last_name
 		})
 
+		return this.generateToken(user)
+	}
+
+	async loginByTelegram( telegramId: number, botSecret: string ): Promise<JwtResponseDto> {
+		if(botSecret != ENV.BOT_SECRET){
+			throw new ForbiddenException('Invalid bot secret')
+		}
+		const user = await this.usersService.findOrCreate({telegramId})
 		return this.generateToken(user)
 	}
 
