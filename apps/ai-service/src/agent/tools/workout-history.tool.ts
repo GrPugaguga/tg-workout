@@ -7,7 +7,7 @@ import { firstValueFrom } from "rxjs";
 interface WorkoutSummary {
     id: string
     date: string
-    exercises: { exerciseName: string; sets: { sets: number; reps?: number; weight?: number; duration?: number }[] }[]
+    exercises: { exercise: { name: string }; sets: { sets: number; reps?: number; weight?: number; duration?: number }[] }[]
 }
 
 @Injectable()
@@ -28,7 +28,14 @@ export class WorkoutHistoryTool extends Tool {
 
         const lines = workouts.map((w, i) => {
             const date = new Date(w.date).toLocaleDateString('ru-RU')
-            const exercises = w.exercises.map(e => `  - ${e.exerciseName}`).join('\n')
+            const exercises = w.exercises.map(e => {
+                const sets = e.sets.map(s => {
+                    if (s.duration) return `${s.sets}x${s.duration}сек`
+                    const weight = s.weight ? ` — ${s.weight}кг` : ''
+                    return `${s.sets}x${s.reps ?? 1}${weight}`
+                }).join(', ')
+                return `  - ${e.exercise.name}: ${sets}`
+            }).join('\n')
             return `${i + 1}. ${date}\n${exercises}`
         })
 

@@ -33,7 +33,7 @@ export class WorkoutRepository extends WorkoutRepositoryPort {
 		return this.repo.find({
 			where: { userId },
 			relations: WORKOUT_RELATIONS,
-			order: { date: 'DESC' },
+			order: { date: 'DESC', exercises: { orderIndex: 'ASC' } },
 			skip: options?.skip,
 			take: options?.take
 		})
