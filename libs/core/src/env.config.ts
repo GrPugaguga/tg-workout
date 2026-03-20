@@ -25,6 +25,7 @@ const envSchema = z.object({
 		.default('info'),
 
 	GATEWAY_PORT: z.coerce.number().default(3000),
+	GATEWAY_URL: z.string().default('http://localhost:3000/graphql'),
 
 	USER_SERVICE_PORT: z.coerce.number().default(3001),
 	USER_DB_HOST: z.string(),
@@ -44,7 +45,15 @@ const envSchema = z.object({
 	RABBIT_PASSWORD: z.string(),
 	RABBITMQ_URL: z.string(),
 
+	REDIS_USER: z.string(),
+	REDIS_PASSWORD: z.string(),
+	REDIS_PORT: z.coerce.number().default(6379),
+	REDIS_URL: z.string().optional(),
+
 	BOT_TOKEN: z.string(),
+	BOT_SERVICE_PORT: z.coerce.number().default(3004),
+	BOT_SECRET: z.string(),
+	BOT_WEBHOOK_URL: z.string().optional(),
 
 	JWT_SECRET: z.string(),
 	JWT_EXPIRES_IN: z.coerce.number().default(86400),
