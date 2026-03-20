@@ -22,9 +22,14 @@ export class BotService implements OnModuleInit, OnModuleDestroy{
 
     async onModuleInit() {
         this.bot = new Bot(ENV.BOT_TOKEN)
+
+        this.bot.catch((err) => {
+            this.logger.error('Bot error:', err.error)
+        })
+
         this.setupHandlers()
         await this.bot.init()
-        this.logger.log('Bot initialized')
+        this.logger.log(`Bot initialized: @${this.bot.botInfo.username}`)
     }
 
     onModuleDestroy() {
@@ -55,6 +60,7 @@ export class BotService implements OnModuleInit, OnModuleDestroy{
             this.logger.log(`Message from telegramId=${telegramId}: "${text.substring(0, 50)}"`)
 
             try {
+                this.logger.log(`Message from telegramId=${telegramId}: "${text.substring(0, 50)}"`)
                 const token = await this.getToken(telegramId)
 
                 const aiResponse = await this.gatewayClient.sendMessage(text, token)

@@ -24,8 +24,9 @@ async function bootstrap() {
     await bot.api.setWebhook(`${ENV.BOT_WEBHOOK_URL}/webhook`)
     logger.log(`Webhook set: ${ENV.BOT_WEBHOOK_URL}/webhook`)
   } else {
-    bot.start()
-    logger.log('Bot started (long polling)')
+    bot.start({
+      onStart: () => logger.log('Bot started (long polling)'),
+    }).catch(err => logger.error('Bot polling failed', err))
   }
 }
 bootstrap();
