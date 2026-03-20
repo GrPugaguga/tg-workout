@@ -25,6 +25,11 @@ export class HealthController {
 				this.http.pingCheck(
 					'workout-service',
 					`http://localhost:${process.env.WORKOUT_SERVICE_PORT || 3002}/health`
+				),
+			() =>
+				this.http.pingCheck(
+					'bot-service',
+					`http://localhost:${process.env.BOT_SERVICE_PORT || 3004}/health`
 				)
 		])
 	}
