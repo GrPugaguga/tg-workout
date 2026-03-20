@@ -3,6 +3,7 @@ import { Inject, Injectable, Logger } from '@nestjs/common'
 import { AI_MODELS, AiModel, buildParseWorkoutPrompt } from '@app/ai_models'
 
 import { ParsedExercise, ParsedWorkoutResult, ParseWorkoutDto } from './dto/parse-workout.dto'
+import { SearchExerciseResult } from '@app/contracts/dto'
 
 interface LlmExercise {
 	exerciseName: string
@@ -57,6 +58,21 @@ export class ParsingServiceService {
 		)
 
 		return { exercises }
+	}
+
+	async searchExercise(query: string): Promise<SearchExerciseResult[]> {
+		const result = await exerciseCollection.search({
+			q: query,
+			query_by: ['name', 'aliases'],
+			num_typos: 2,
+			per_page: 10,
+		})
+		return (result.hits ?? []).map(h => ({
+			id: h.document.id,
+			name: h.document.name,
+			aliases: h.document.aliases,
+			muscleGroups: h.document.muscleGroups,
+		}))
 	}
 
 	private async buildPrompt(): Promise<string> {

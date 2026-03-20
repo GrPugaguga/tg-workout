@@ -15,6 +15,7 @@ import { WorkoutRepositoryPort } from './repository/workout.repository.abstract'
 import { WorkoutCommandService } from './workout-command.service'
 import { WorkoutQueryService } from './workout-query.service'
 import { WorkoutResolver } from './workout.resolver'
+import { WorkoutHandler } from './workout.handler'
 
 @Module({
 	imports: [
@@ -32,10 +33,11 @@ import { WorkoutResolver } from './workout.resolver'
 			},
 		]),
 	],
+	controllers: [ WorkoutHandler ],
 	providers: [
 		WorkoutResolver,
 		WorkoutCommandService,
-		WorkoutQueryService,
+		WorkoutQueryService, 
 		WorkoutEventsListener,
 		{
 			provide: WorkoutRepositoryPort,
