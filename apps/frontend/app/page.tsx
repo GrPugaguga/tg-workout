@@ -61,7 +61,7 @@ const mockHistory: IExerciseHistoryData[] = [
 export default function Home() {
   return (
     <div className="flex flex-col items-center gap-4 py-10">
-      <Workout data={mockWorkout} />
+      <Workout data={mockWorkout} onDelete={() => console.log('delete')} />
       <ExerciseItem title="Жим штанги лёжа" maxVal={82} onClick={() => {}} />
       <OneRepMax value={82} />
       <ExerciseHistory data={mockHistory} />
