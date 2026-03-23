@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { TelegramTheme } from "@/components/TelegramTheme";
+import { Footer } from "@/components/Footer";
 
 
 export const metadata: Metadata = {
@@ -18,9 +19,12 @@ export default function RootLayout({
       lang="en"
       className={` h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col pt-[calc(env(safe-area-inset-top)+20px)]">
         <TelegramTheme/>
         {children}
+        <div className="fixed bottom-5 left-0 right-0 flex justify-center">
+          <Footer />
+        </div>
       </body>
     </html>
   );
