@@ -6,7 +6,7 @@ export function ActionPopup({onClick} : {onClick: () => void}){
         onClick={onClick}
         >
             <span className="font-normal leading-5.5 text-[17px] tracking-[-0.43px] text-ios-delete">Удалить тренировку</span>
-            <Image src="/svg/delete.svg" alt="delete" width={22} height={22} className="" />
+            <Image src="/svg/delete.svg" alt="delete" width={22} height={22} className="" priority />
         </button>
     )
 }
