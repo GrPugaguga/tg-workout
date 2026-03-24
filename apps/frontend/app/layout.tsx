@@ -19,7 +19,7 @@ export default function RootLayout({
       lang="en"
       className={` h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col pt-30 pb-25 flex flex-col items-center ">
+      <body className="min-h-full flex flex-col pt-5 pb-25 flex flex-col items-center ">
         <TelegramTheme/>
         {children}
         <div className="fixed bottom-5 left-0 right-0 flex justify-center">
