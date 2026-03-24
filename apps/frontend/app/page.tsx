@@ -2,12 +2,8 @@
 
 import { Workout } from "@/components/cards/Workout";
 import type { IWorkout } from "@/components/cards/Workout";
-import { ExerciseItem } from "@/components/cards/ExerciseItem";
-import { OneRepMax } from "@/components/cards/OneRepMax";
-import { ExerciseHistory } from "@/components/cards/ExerciseHistory";
-import type { IExerciseHistoryData } from "@/components/cards/ExerciseHistory";
-import { Chart } from "@/components/cards/Chart";
-import type { IChartPoint } from "@/components/cards/Chart";
+import Image from "next/image";
+import { useState } from "react";
 
 const mockWorkout: IWorkout = {
   id: "1",
@@ -36,46 +32,26 @@ const mockWorkout: IWorkout = {
   ],
 };
 
-const mockChartData: IChartPoint[] = [
-  { date: "13/01", value: 80 },
-  { date: "52/01", value: 50 },
-  { date: "24/01", value: 90 },
-  { date: "24/01", value: 100 },
-];
-
-const mockHistory: IExerciseHistoryData[] = [
-  {
-    date: "15/03/2025",
-    sets: [
-      { sets: 3, reps: 8, weight: 70 },
-      { sets: 2, reps: 6, weight: 80 },
-    ],
-  },
-  {
-    date: "08/03/2025",
-    sets: [
-      { sets: 4, reps: 8, weight: 65 },
-      { sets: 1, reps: 5, weight: 75 },
-    ],
-  },
-  {
-    date: "01/03/2025",
-    sets: [
-      { sets: 3, reps: 10, weight: 60 },
-      { sets: 2, reps: 8, weight: 70 },
-    ],
-  },
-];
-
 export default function Home() {
+  const [isASCSortType, setIsASCSortType] = useState(true)
+  
   return (
-    <div className="flex flex-col items-center gap-4 py-10">
-      <ExerciseItem title="Жим штанги лёжа" maxVal={82} onClick={() => {}} />
-      <OneRepMax value={82} />
-      <Chart title="Вес" data={mockChartData} unit="кг" />
-
+    <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-row justify-between">
+          <span className="leading-6 font-semibold text-[18px] tracking-[-0.45px] text-txt">Тренировки</span>
+          <Image src="/svg/header/calendar.svg" alt="sort" width={22} height={22} className="cursor-pointer"/>
+        </div>
+        <div className="flex flex-row gap-2.5" onClick={() => setIsASCSortType(!isASCSortType)}>
+          <Image src="/svg/header/sort.svg" alt="sort" width={22} height={22}/>
+          <span className="text-[14px] text-grey-dark leading-5.5 font-semibold">{isASCSortType? 'Недавно ': 'Давно '} выполненные</span>
+        </div>
+      </div>
       <Workout data={mockWorkout} onDelete={() => console.log('delete')} />
-      <ExerciseHistory data={mockHistory} />
+      <Workout data={mockWorkout} onDelete={() => console.log('delete')} />
+      <Workout data={mockWorkout} onDelete={() => console.log('delete')} />
+      <Workout data={mockWorkout} onDelete={() => console.log('delete')} />
+      <Workout data={mockWorkout} onDelete={() => console.log('delete')} />
     </div>
   );
 }
