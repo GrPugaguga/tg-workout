@@ -2,12 +2,14 @@
 
 import { Workout } from "@/components/cards/Workout";
 import type { IWorkout } from "@/components/cards/Workout";
+import { Calendar } from "@/components/Calendar";
 import Image from "next/image";
 import { useState } from "react";
+import { createPortal } from "react-dom";
 
 const mockWorkout: IWorkout = {
   id: "1",
-  date: "15/03/2025",
+  date: "15/03/2026",
   exercises: [
     {
       title: "Жим штанги лёжа",
@@ -34,13 +36,17 @@ const mockWorkout: IWorkout = {
 
 export default function Home() {
   const [isASCSortType, setIsASCSortType] = useState(true)
-  
+  const [showCalendar, setShowCalendar] = useState(false)
+  const [selectedDate, setSelectedDate] = useState<string | null>(null)
+
+  const workoutDates = [mockWorkout.date];
+
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-4">
         <div className="flex flex-row justify-between">
           <span className="leading-6 font-semibold text-[18px] tracking-[-0.45px] text-txt">Тренировки</span>
-          <Image src="/svg/calendar/calendar.svg" alt="sort" width={22} height={22} className="cursor-pointer"/>
+          <Image src="/svg/calendar/calendar.svg" alt="sort" width={22} height={22} className="cursor-pointer" onClick={() => setShowCalendar(true)}/>
         </div>
         <div className="flex flex-row gap-2.5" onClick={() => setIsASCSortType(!isASCSortType)}>
           <Image src="/svg/header/sort.svg" alt="sort" width={22} height={22}/>
@@ -54,6 +60,16 @@ export default function Home() {
         <Workout data={mockWorkout} onDelete={() => console.log('delete')} />
         <Workout data={mockWorkout} onDelete={() => console.log('delete')} />
       </div>
+      {showCalendar && createPortal(
+        <div className="fixed inset-0 bg-black/40 flex items-start justify-center z-50 pt-6">
+          <Calendar
+            workoutDates={workoutDates}
+            onSelectDate={(date) => { setSelectedDate(date); setShowCalendar(false); }}
+            onClose={() => setShowCalendar(false)}
+          />
+        </div>,
+        document.body
+      )}
     </div>
   );
 }
