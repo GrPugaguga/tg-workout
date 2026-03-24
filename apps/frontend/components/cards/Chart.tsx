@@ -27,35 +27,43 @@ const CHART_BOTTOM = CHART_HEIGHT - MARGIN_BOTTOM;
 const GRADIENT_ID = "chart-area-gradient";
 const SHADOW_ID = "chart-date-shadow";
 
+function niceNum(value: number): number {
+  if (value <= 0) return 1;
+  const mag = Math.pow(10, Math.floor(Math.log10(value)));
+  const norm = value / mag;
+  if (norm <= 1.5) return mag;
+  if (norm <= 3) return 2 * mag;
+  if (norm <= 7) return 5 * mag;
+  return 10 * mag;
+}
+
 function getYConfig(data: IChartPoint[]) {
   const values = data.map((d) => d.value);
   const min = Math.min(...values);
   const max = Math.max(...values);
+  const diff = max - min;
 
-  const adjustedMin = min * 0.75;
-  const range = max - adjustedMin;
-  const rough = range * 0.25;
-  if (rough <= 0) {
-    const fallbackMax = max * 2 || 10;
-    return { domain: [0, fallbackMax] as [number, number], ticks: [] as number[] };
+  const step = diff > 0 ? niceNum(diff / 3) : niceNum(max * 0.25 || 1);
+
+  let yMin = Math.floor(min / step) * step;
+
+  // Ensure all data fits within 6 ticks (5 intervals)
+  while (yMin + 5 * step < max) {
+    yMin -= step;
   }
 
-  const mag = Math.pow(10, Math.floor(Math.log10(rough)));
-  const norm = rough / mag;
-  const step =
-    norm <= 1.5 ? mag : norm <= 3 ? 2 * mag : norm <= 7 ? 5 * mag : 10 * mag;
-
-  const yMin = Math.floor(adjustedMin / step) * step;
-  const yMax = (Math.ceil(max / step) + 1) * step;
-
-  // Explicit ticks for nice labels
-  const ticks: number[] = [];
-  for (let i = yMin; i <= yMax; i += step) {
-    ticks.push(i);
+  // Add bottom padding if max still has headroom
+  if (yMin + 4 * step >= max) {
+    yMin -= step;
   }
 
-  // Domain extends beyond ticks so grid lines are INSIDE, not at edges
-  const domain: [number, number] = [yMin - step * 0.5, yMax + step * 0.5];
+  // Don't go negative for non-negative data
+  if (yMin < 0 && min >= 0) {
+    yMin = 0;
+  }
+
+  const ticks = Array.from({ length: 6 }, (_, i) => yMin + i * step);
+  const domain: [number, number] = [yMin - step * 0.5, yMin + 5 * step + step * 0.5];
 
   return { domain, ticks };
 }
@@ -156,12 +164,14 @@ function renderLastDot(
 export function Chart({ title, data, unit }: ChartProps) {
   const { domain: yDomain, ticks: yTicks } = useMemo(() => getYConfig(data), [data]);
 
+  const normalized: IChartPoint[] = data.length === 1 ? [data[0], data[0]] : data;
+
   const chartData = useMemo(
-    () => data.map((d, i) => ({ ...d, idx: i })),
-    [data],
+    () => normalized.map((d, i) => ({ ...d, idx: i })),
+    [normalized],
   );
 
-  const lastPoint = data[data.length - 1];
+  const lastPoint = data[normalized.length - 1];
   const valueBadgeW = lastPoint
     ? `${lastPoint.value} ${unit}`.length * 8.5 + 20
     : 0;
@@ -209,7 +219,7 @@ export function Chart({ title, data, unit }: ChartProps) {
                 );
               }}
               verticalCoordinatesGenerator={({ offset }: any) => {
-                const n = Math.min(Math.max(data.length, 6), 15);
+                const n = Math.min(Math.max(normalized.length, 6), 15);
                 const chartW = offset.width;
                 const lines: number[] = [];
                 for (let i = 1; i <= n; i++) {
@@ -221,7 +231,7 @@ export function Chart({ title, data, unit }: ChartProps) {
             <XAxis
               dataKey="idx"
               type="number"
-              domain={[0, data.length - 1]}
+              domain={[0, normalized.length - 1]}
               padding={{ left: 0, right: xPaddingRight }}
               hide
             />
@@ -244,7 +254,7 @@ export function Chart({ title, data, unit }: ChartProps) {
               stroke="var(--accent)"
               strokeWidth={1}
               fill={`url(#${GRADIENT_ID})`}
-              dot={(props: any) => renderLastDot(props, data.length, unit)}
+              dot={(props: any) => renderLastDot(props, normalized.length, unit)}
               isAnimationActive={false}
             />
           </AreaChart>

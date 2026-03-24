@@ -7,9 +7,9 @@ import { useRouter } from "next/navigation";
 
 
 const mockChartData: IChartPoint[] = [
-  { date: "13/01", value: 93 },
+  { date: "13/01", value: 90 },
   { date: "52/01", value: 95 },
-  { date: "24/01", value: 97 },
+  { date: "24/01", value: 102 },
   { date: "24/01", value: 100 },
 ];
 
@@ -49,10 +49,11 @@ export default function ExercisesPage({params}: {
                 <Image src="/svg/exercise/back.svg" alt="back" width={22} height={22} className="self-center cursor-pointer" onClick={router.back}/>
                 <span className="w-full text-center leading-6 font-semibold text-[18px] tracking-[-0.45px] text-txt">Название упражнения</span>
             </div>
-
-            <Chart title="Вес" data={mockChartData} unit="кг" />
-            <OneRepMax value={82} />
-            <ExerciseHistory data={mockHistory} />
+            <div className="flex flex-col gap-4">
+                <Chart title="Вес" data={mockChartData} unit="кг" />
+                <OneRepMax value={82} />
+                <ExerciseHistory data={mockHistory} />
+            </div>
         </div>
     )
 }

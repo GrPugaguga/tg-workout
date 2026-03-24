@@ -38,9 +38,11 @@ export default function ExercisesPage() {
             <span className="text-[14px] text-grey-dark leading-5.5 font-semibold">{isASCSortType? 'Недавно ': 'Давно '} выполненные</span>
           </div>
       </div>
-      {mockExerciseItems.map((item, i) => (
-        <ExerciseItem title={item.title} maxVal={item.maxVal} id={item.id} key={i}/>
-      ))}
+      <div className="flex flex-col gap-4">
+        {mockExerciseItems.map((item, i) => (
+          <ExerciseItem title={item.title} maxVal={item.maxVal} id={item.id} key={i}/>
+        ))}
+      </div>
     </div>
   
   );
