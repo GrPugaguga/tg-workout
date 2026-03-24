@@ -6,6 +6,8 @@ import { ExerciseItem } from "@/components/cards/ExerciseItem";
 import { OneRepMax } from "@/components/cards/OneRepMax";
 import { ExerciseHistory } from "@/components/cards/ExerciseHistory";
 import type { IExerciseHistoryData } from "@/components/cards/ExerciseHistory";
+import { Chart } from "@/components/cards/Chart";
+import type { IChartPoint } from "@/components/cards/Chart";
 
 const mockWorkout: IWorkout = {
   id: "1",
@@ -33,6 +35,13 @@ const mockWorkout: IWorkout = {
     },
   ],
 };
+
+const mockChartData: IChartPoint[] = [
+  { date: "13/01", value: 80 },
+  { date: "52/01", value: 50 },
+  { date: "24/01", value: 90 },
+  { date: "24/01", value: 100 },
+];
 
 const mockHistory: IExerciseHistoryData[] = [
   {
@@ -63,6 +72,8 @@ export default function Home() {
     <div className="flex flex-col items-center gap-4 py-10">
       <ExerciseItem title="Жим штанги лёжа" maxVal={82} onClick={() => {}} />
       <OneRepMax value={82} />
+      <Chart title="Вес" data={mockChartData} unit="кг" />
+
       <Workout data={mockWorkout} onDelete={() => console.log('delete')} />
       <ExerciseHistory data={mockHistory} />
     </div>
