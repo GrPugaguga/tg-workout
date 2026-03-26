@@ -1,15 +1,17 @@
+import { PaginationInput } from '../dto/pagination.input';
 import { Workout } from '../entities/workout.entity'
 
 export abstract class WorkoutRepositoryPort {
 	abstract findById(id: string): Promise<Workout | null>
 	abstract findByUserId(
 		userId: string,
-		options?: { skip?: number; take?: number }
+		options?: Partial<PaginationInput>
 	): Promise<Workout[]>
 	abstract findByUserIdAndDate(
 		userId: string,
 		date: Date
 	): Promise<Workout | null>
+	abstract countByUserId(userId: string): Promise<number>
 	abstract save(workout: Workout): Promise<Workout>
 	abstract delete(id: string): Promise<boolean>
 }

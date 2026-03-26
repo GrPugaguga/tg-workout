@@ -5,6 +5,7 @@ import { Repository } from 'typeorm'
 import { Workout } from '../entities/workout.entity'
 
 import { WorkoutRepositoryPort } from './workout.repository.abstract'
+import { PaginationInput } from '../dto/pagination.input'
 
 const WORKOUT_RELATIONS = [
 	'exercises',
@@ -28,12 +29,12 @@ export class WorkoutRepository extends WorkoutRepositoryPort {
 
 	async findByUserId(
 		userId: string,
-		options?: { skip?: number; take?: number }
+		options?: Partial<PaginationInput>
 	): Promise<Workout[]> {
 		return this.repo.find({
 			where: { userId },
 			relations: WORKOUT_RELATIONS,
-			order: { date: 'DESC', exercises: { orderIndex: 'ASC' } },
+			order: { date: options?.sort ?? 'DESC', exercises: { orderIndex: 'ASC' } },
 			skip: options?.skip,
 			take: options?.take
 		})
@@ -46,6 +47,12 @@ export class WorkoutRepository extends WorkoutRepositoryPort {
 		return this.repo.findOne({
 			where: { userId, date },
 			relations: WORKOUT_RELATIONS
+		})
+	}
+
+	async countByUserId(userId: string): Promise<number> {
+		return this.repo.count({
+			where: {userId}
 		})
 	}
 

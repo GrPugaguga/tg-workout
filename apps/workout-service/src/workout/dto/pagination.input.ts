@@ -1,5 +1,8 @@
-import { Field, InputType, Int } from '@nestjs/graphql'
-import { IsNumber, IsOptional, Max, Min } from 'class-validator'
+import { Field, InputType, Int, registerEnumType } from '@nestjs/graphql'
+import { IsEnum, IsNumber, IsOptional, Max, Min } from 'class-validator'
+
+export enum SortEnum {asc = 'asc', desc = 'desc'}
+registerEnumType(SortEnum, {name: 'SortEnum'})
 
 @InputType()
 export class PaginationInput {
@@ -15,4 +18,9 @@ export class PaginationInput {
 	@Max(100)
 	@Field(() => Int, { defaultValue: 20 })
 	take: number = 20
+
+	@IsOptional()
+	@IsEnum(SortEnum)
+	@Field(() => SortEnum, { defaultValue: SortEnum.desc})
+	sort: SortEnum = SortEnum.desc
 }

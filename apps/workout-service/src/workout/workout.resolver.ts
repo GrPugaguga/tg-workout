@@ -9,6 +9,7 @@ import { Workout } from './entities/workout.entity'
 import { WorkoutCommandService } from './workout-command.service'
 import { WorkoutQueryService } from './workout-query.service'
 import { CreateWorkoutInput } from '@app/contracts'
+import { WorkoutDto } from './dto/workout.type'
 
 @Resolver(() => Workout)
 export class WorkoutResolver {
@@ -24,7 +25,7 @@ export class WorkoutResolver {
 	}
 
 	@UseGuards(AuthenticatedGuard)
-	@Query(() => [Workout], { name: 'myWorkouts' })
+	@Query(() => WorkoutDto, { name: 'myWorkouts' })
 	getMyWorkouts(
 		@CurrentUser() user: FederationUser,
 		@Args('pagination', { nullable: true })
