@@ -11,6 +11,7 @@ import { WorkoutQueryService } from './workout-query.service'
 import { CreateWorkoutInput } from '@app/contracts'
 import { WorkoutType } from './dto/workout.type'
 import { DateInput } from './dto/getWorkoutByDate.input'
+import { WorkoutDates } from './dto/getWorkoutDates.type'
 
 @Resolver(() => Workout)
 export class WorkoutResolver {
@@ -43,6 +44,14 @@ export class WorkoutResolver {
 		input: DateInput
 	) {
 		return this.queryService.getUserWorkoutByDay(user.id, input.date)
+	}
+
+	@UseGuards(AuthenticatedGuard)
+	@Query(() => WorkoutDates , { name: 'myWorkoutDates' })
+	getWorkoutDates(
+		@CurrentUser() user: FederationUser
+	) {
+		return this.queryService.getUserWorkoutDates(user.id)
 	}
 
 	@UseGuards(AuthenticatedGuard)

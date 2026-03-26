@@ -4,6 +4,7 @@ import { PaginationInput } from './dto/pagination.input'
 import { Workout } from './entities/workout.entity'
 import { WorkoutRepositoryPort } from './repository/workout.repository.abstract'
 import { WorkoutType } from './dto/workout.type'
+import { WorkoutDates } from './dto/getWorkoutDates.type'
 
 @Injectable()
 export class WorkoutQueryService {
@@ -46,6 +47,12 @@ export class WorkoutQueryService {
 			total: workouts.length,
 			hasMore: false 
 		}
+	}
+
+	async getUserWorkoutDates (
+		userId: string
+	): Promise<WorkoutDates> {
+		return {dates: await this.workoutRepository.getWorkoutDatesByUserId(userId)}
 	}
 
 }

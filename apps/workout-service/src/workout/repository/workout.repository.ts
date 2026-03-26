@@ -50,6 +50,17 @@ export class WorkoutRepository extends WorkoutRepositoryPort {
 		})
 	}
 
+	async getWorkoutDatesByUserId(userId: string): Promise<string[]> {
+		const row = await this.repo.query(`
+			SELECT DISTINCT date
+			FROM workouts
+			WHERE "userId" = $1
+			ORDER BY date DESC
+			`,
+		[userId])
+		return row.map(((row: {date: string}) => row.date))
+	}
+
 	async countByUserId(userId: string): Promise<number> {
 		return this.repo.count({
 			where: {userId}

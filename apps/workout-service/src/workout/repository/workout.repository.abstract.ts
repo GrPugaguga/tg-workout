@@ -11,6 +11,7 @@ export abstract class WorkoutRepositoryPort {
 		userId: string,
 		date: Date
 	): Promise<Workout[]>
+	abstract getWorkoutDatesByUserId (userId: string): Promise<string[]>
 	abstract countByUserId(userId: string): Promise<number>
 	abstract save(workout: Workout): Promise<Workout>
 	abstract delete(id: string): Promise<boolean>
