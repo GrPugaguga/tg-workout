@@ -6,10 +6,15 @@ import { WorkoutRepositoryPort } from './repository/workout.repository.abstract'
 import { WorkoutType } from './dto/workout.type'
 import { WorkoutDates } from './dto/getWorkoutDates.type'
 import { WorkoutExerciseType } from './dto/workout-exercise.type'
+import { WorkoutExerciseHistoryType } from './dto/workout-exercise-history.type'
+import { ExerciseService } from '../exercise/exercise.service'
 
 @Injectable()
 export class WorkoutQueryService {
-	constructor(private readonly workoutRepository: WorkoutRepositoryPort) {}
+	constructor(
+		private readonly workoutRepository: WorkoutRepositoryPort,
+		private readonly exerciseService: ExerciseService
+	) {}
 
 	async getWorkout(id: string): Promise<Workout> {
 		const workout = await this.workoutRepository.findById(id)
@@ -62,4 +67,17 @@ export class WorkoutQueryService {
 	): Promise<WorkoutExerciseType[]> {
 		return this.workoutRepository.getUserExercisesList(userId, options)
 	}
+
+	async getUserExerciseHistory(userId: string, exercise: string): Promise<WorkoutExerciseHistoryType> {
+		const history = await this.workoutRepository.getUserExerciseHistory(userId, exercise)
+		const { name } = await this.exerciseService.findById(exercise)
+
+		return {
+			id: exercise,
+			name,
+			maxWeight:  Math.max(...history.map(h => h.maxWeight ?? 0)),
+			history
+		}
+
+	}	
 }

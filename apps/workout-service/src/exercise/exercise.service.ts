@@ -27,7 +27,6 @@ export class ExerciseService {
 			throw new NotFoundException(`Exercise with id ${id} not found`)
 		return exercise
 	}
-
 	async findAll(): Promise<Exercise[]> {
 		return this.exerciseRepository.findAll()
 	}

@@ -7,6 +7,7 @@ import { Workout } from '../entities/workout.entity'
 import { WorkoutRepositoryPort } from './workout.repository.abstract'
 import { PaginationInput, SortEnum } from '../dto/pagination.input'
 import { WorkoutExerciseType } from '../dto/workout-exercise.type'
+import { WorkoutHistoryItem } from '../dto/workout-exercise-history.type'
 
 const WORKOUT_RELATIONS = [
 	'exercises',
@@ -81,6 +82,24 @@ export class WorkoutRepository extends WorkoutRepositoryPort {
 			`,
 		[userId])
 		return row
+	}
+
+	async getUserExerciseHistory(userId: string, exercise: string): Promise<WorkoutHistoryItem[]> {
+		return this.repo.query(`
+				SELECT w.date, MAX(we."maxWeight") as "maxWeight", json_agg(json_build_object(
+				  'setNumber', ws."setNumber",
+				  'weight', ws.weight,
+				  'reps', ws.reps,
+				  'sets', ws.sets
+				)) as sets 
+				FROM workout_sets ws
+				JOIN workout_exercises we ON ws."workoutExerciseId" = we.id
+				JOIN workouts w ON we."workoutId" = w.id
+				WHERE w."userId" = $1 AND we."exerciseId" = $2
+				GROUP BY w.date
+				ORDER BY w.date DESC
+			`,
+		[userId, exercise])
 	}
 
 	async save(workout: Workout): Promise<Workout> {

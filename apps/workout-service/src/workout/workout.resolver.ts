@@ -13,6 +13,7 @@ import { WorkoutType } from './dto/workout.type'
 import { DateInput } from './dto/getWorkoutByDate.input'
 import { WorkoutDates } from './dto/getWorkoutDates.type'
 import { WorkoutExerciseType } from './dto/workout-exercise.type'
+import { WorkoutExerciseHistoryType } from './dto/workout-exercise-history.type'
 
 @Resolver(() => Workout)
 export class WorkoutResolver {
@@ -65,7 +66,15 @@ export class WorkoutResolver {
 		return this.queryService.getUserExercisesList(user.id, {sort})
 	}
 
-
+	@UseGuards(AuthenticatedGuard)
+	@Query(() => WorkoutExerciseHistoryType , { name: 'myExerciseHistory' })
+	getExerciseHistory(
+		@CurrentUser() user: FederationUser,
+		@Args('exercise', { type: () => String })
+		exercise: string
+	) {
+		return this.queryService.getUserExerciseHistory(user.id, exercise)
+	}
 
 	@UseGuards(AuthenticatedGuard)
 	@Mutation(() => Workout)
