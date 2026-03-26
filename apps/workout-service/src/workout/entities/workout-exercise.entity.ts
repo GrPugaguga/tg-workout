@@ -20,7 +20,7 @@ export class WorkoutExercise {
 	@PrimaryGeneratedColumn()
 	id!: number
 
-	@ManyToOne(() => Workout, w => w.exercises)
+	@ManyToOne(() => Workout, w => w.exercises, { onDelete: 'CASCADE' })
 	workout!: Workout
 
 	@Field(() => Exercise)
@@ -28,7 +28,7 @@ export class WorkoutExercise {
 	exercise!: Exercise
 
 	@Field(() => Float, {nullable: true})
-	@Column({nullable: true})
+	@Column({ type: 'decimal', precision: 6, scale: 2, nullable: true })
 	maxWeight!: number
 
 	@Field(() => Equipment, { nullable: true })

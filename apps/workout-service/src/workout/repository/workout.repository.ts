@@ -72,7 +72,7 @@ export class WorkoutRepository extends WorkoutRepositoryPort {
 	async getUserExercisesList(userId: string, options?: Pick<PaginationInput, 'sort'>): Promise<WorkoutExerciseType[]> {
 		const sort = options?.sort ?? SortEnum.desc
 		const row = await this.repo.query(`
-			SELECT ex.id, ex.name, MAX(we.maxWeight) as "maxWeight"
+			SELECT ex.id, ex.name, MAX(we."maxWeight") as "maxWeight"
 			FROM workout_exercises we
 			JOIN exercises ex ON we."exerciseId"  = ex.id
 			JOIN workouts w ON we."workoutId" = w.id
