@@ -5,7 +5,8 @@ import { Repository } from 'typeorm'
 import { Workout } from '../entities/workout.entity'
 
 import { WorkoutRepositoryPort } from './workout.repository.abstract'
-import { PaginationInput } from '../dto/pagination.input'
+import { PaginationInput, SortEnum } from '../dto/pagination.input'
+import { WorkoutExerciseType } from '../dto/workout-exercise.type'
 
 const WORKOUT_RELATIONS = [
 	'exercises',
@@ -65,6 +66,21 @@ export class WorkoutRepository extends WorkoutRepositoryPort {
 		return this.repo.count({
 			where: {userId}
 		})
+	}
+
+	async getUserExercisesList(userId: string, options?: Pick<PaginationInput, 'sort'>): Promise<WorkoutExerciseType[]> {
+		const sort = options?.sort ?? SortEnum.desc
+		const row = await this.repo.query(`
+			SELECT ex.id, ex.name, MAX(we.maxWeight) as "maxWeight"
+			FROM workout_exercises we
+			JOIN exercises ex ON we."exerciseId"  = ex.id
+			JOIN workouts w ON we."workoutId" = w.id
+			WHERE "userId" = $1
+			GROUP BY ex.id, ex.name
+			ORDER BY MAX(w.date) ${sort}
+			`,
+		[userId])
+		return row
 	}
 
 	async save(workout: Workout): Promise<Workout> {

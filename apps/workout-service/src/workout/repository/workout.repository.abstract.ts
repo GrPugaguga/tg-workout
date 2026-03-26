@@ -1,4 +1,5 @@
 import { PaginationInput } from '../dto/pagination.input';
+import { WorkoutExerciseType } from '../dto/workout-exercise.type';
 import { Workout } from '../entities/workout.entity'
 
 export abstract class WorkoutRepositoryPort {
@@ -13,6 +14,10 @@ export abstract class WorkoutRepositoryPort {
 	): Promise<Workout[]>
 	abstract getWorkoutDatesByUserId (userId: string): Promise<string[]>
 	abstract countByUserId(userId: string): Promise<number>
+	abstract getUserExercisesList(
+		userId: string,
+		options?: Pick<PaginationInput,'sort'>
+	): Promise<WorkoutExerciseType[]>
 	abstract save(workout: Workout): Promise<Workout>
 	abstract delete(id: string): Promise<boolean>
 }

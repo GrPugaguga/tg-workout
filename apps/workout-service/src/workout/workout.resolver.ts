@@ -3,7 +3,7 @@ import { UseGuards } from '@nestjs/common'
 import { Args, ID, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
 
 import { AddExerciseInput } from './dto/add-exercise.input'
-import { PaginationInput } from './dto/pagination.input'
+import { PaginationInput, SortEnum } from './dto/pagination.input'
 import { ParsedWorkoutResultType } from './dto/parsed-workout-result.type'
 import { Workout } from './entities/workout.entity'
 import { WorkoutCommandService } from './workout-command.service'
@@ -12,6 +12,7 @@ import { CreateWorkoutInput } from '@app/contracts'
 import { WorkoutType } from './dto/workout.type'
 import { DateInput } from './dto/getWorkoutByDate.input'
 import { WorkoutDates } from './dto/getWorkoutDates.type'
+import { WorkoutExerciseType } from './dto/workout-exercise.type'
 
 @Resolver(() => Workout)
 export class WorkoutResolver {
@@ -53,6 +54,18 @@ export class WorkoutResolver {
 	) {
 		return this.queryService.getUserWorkoutDates(user.id)
 	}
+
+	@UseGuards(AuthenticatedGuard)
+	@Query(() => [WorkoutExerciseType] , { name: 'myExercisesList' })
+	getExercisesList(
+		@CurrentUser() user: FederationUser,
+		@Args('sort', { type: () => SortEnum, nullable: true, defaultValue: SortEnum.desc })
+		sort: SortEnum
+	) {
+		return this.queryService.getUserExercisesList(user.id, {sort})
+	}
+
+
 
 	@UseGuards(AuthenticatedGuard)
 	@Mutation(() => Workout)

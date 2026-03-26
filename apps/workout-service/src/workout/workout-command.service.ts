@@ -26,6 +26,11 @@ export class WorkoutCommandService {
 		@Inject(CLIENTS.PARSING_SERVICE) private readonly parsingClient: ClientProxy,
 	) {}
 
+	private get1RM(weight?:number, reps?: number): number {
+		if(!weight || !reps || reps > 15) return 0
+		return (weight*36)/(37-reps)
+	}
+
 	async createWorkout(
 		userId: string,
 		input: CreateWorkoutInput
@@ -42,11 +47,14 @@ export class WorkoutCommandService {
 				)
 
 				const we = new WorkoutExercise()
+				let maxWeight = 0
 				we.exercise = exercise
 				we.orderIndex = index + 1
 				we.notes = exInput.notes
-
 				we.sets = exInput.sets.map((setInput, setIdx) => {
+
+					const setMaxWeight = this.get1RM(setInput.weight, setInput.reps)
+					if(setMaxWeight > maxWeight) maxWeight = setMaxWeight
 					const ws = new WorkoutSet()
 					ws.setNumber = setIdx + 1
 					ws.weight = setInput.weight
@@ -54,10 +62,11 @@ export class WorkoutCommandService {
 					ws.reps = setInput.reps
 					return ws
 				})
-
+				if(maxWeight > 0) we.maxWeight = maxWeight
 				return we
 			})
 		)
+
 
 		const saved = await this.workoutRepository.save(workout)
 
@@ -80,13 +89,18 @@ export class WorkoutCommandService {
 	): Promise<Workout> {
 		const workout = await this.getWorkoutOrFail(workoutId)
 		const exercise = await this.exerciseService.findById(input.exerciseId)
-
+		
 		const we = new WorkoutExercise()
+		let maxWeight = 0
 		we.exercise = exercise
 		we.orderIndex = workout.exercises.length + 1
 		we.notes = input.notes
 
 		we.sets = input.sets.map((setInput, setIdx) => {
+
+			const setMaxWeight = this.get1RM(setInput.weight, setInput.reps)
+			if(setMaxWeight > maxWeight) maxWeight = setMaxWeight
+			
 			const ws = new WorkoutSet()
 			ws.setNumber = setIdx + 1
 			ws.weight = setInput.weight
@@ -95,6 +109,7 @@ export class WorkoutCommandService {
 			return ws
 		})
 
+		if(maxWeight > 0) we.maxWeight = maxWeight
 		workout.exercises.push(we)
 		const saved = await this.workoutRepository.save(workout)
 

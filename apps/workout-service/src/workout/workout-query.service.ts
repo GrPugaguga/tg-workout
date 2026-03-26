@@ -5,6 +5,7 @@ import { Workout } from './entities/workout.entity'
 import { WorkoutRepositoryPort } from './repository/workout.repository.abstract'
 import { WorkoutType } from './dto/workout.type'
 import { WorkoutDates } from './dto/getWorkoutDates.type'
+import { WorkoutExerciseType } from './dto/workout-exercise.type'
 
 @Injectable()
 export class WorkoutQueryService {
@@ -55,4 +56,10 @@ export class WorkoutQueryService {
 		return {dates: await this.workoutRepository.getWorkoutDatesByUserId(userId)}
 	}
 
+	async getUserExercisesList (
+		userId: string, 
+		options?: Pick<PaginationInput, 'sort'>
+	): Promise<WorkoutExerciseType[]> {
+		return this.workoutRepository.getUserExercisesList(userId, options)
+	}
 }

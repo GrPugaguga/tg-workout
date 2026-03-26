@@ -1,4 +1,4 @@
-import { Field, ID, Int, ObjectType } from '@nestjs/graphql'
+import { Field, Float, ID, Int, ObjectType } from '@nestjs/graphql'
 import {
 	Column,
 	Entity,
@@ -26,6 +26,10 @@ export class WorkoutExercise {
 	@Field(() => Exercise)
 	@ManyToOne(() => Exercise)
 	exercise!: Exercise
+
+	@Field(() => Float, {nullable: true})
+	@Column({nullable: true})
+	maxWeight!: number
 
 	@Field(() => Equipment, { nullable: true })
 	@ManyToOne(() => Equipment, { nullable: true })
