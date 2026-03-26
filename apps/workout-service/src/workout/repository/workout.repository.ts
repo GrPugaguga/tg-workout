@@ -43,8 +43,8 @@ export class WorkoutRepository extends WorkoutRepositoryPort {
 	async findByUserIdAndDate(
 		userId: string,
 		date: Date
-	): Promise<Workout | null> {
-		return this.repo.findOne({
+	): Promise<Workout[]> {
+		return this.repo.find({
 			where: { userId, date },
 			relations: WORKOUT_RELATIONS
 		})

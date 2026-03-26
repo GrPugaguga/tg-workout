@@ -3,7 +3,7 @@ import { Injectable, NotFoundException } from '@nestjs/common'
 import { PaginationInput } from './dto/pagination.input'
 import { Workout } from './entities/workout.entity'
 import { WorkoutRepositoryPort } from './repository/workout.repository.abstract'
-import { WorkoutDto } from './dto/workout.type'
+import { WorkoutType } from './dto/workout.type'
 
 @Injectable()
 export class WorkoutQueryService {
@@ -18,8 +18,8 @@ export class WorkoutQueryService {
 
 	async getUserWorkouts(
 		userId: string,
-		pagination: PaginationInput
-	): Promise<WorkoutDto> {
+		pagination: Partial<PaginationInput>
+	): Promise<WorkoutType> {
 		const workouts = await this.workoutRepository.findByUserId(userId, {
 			skip: pagination.skip,
 			take: pagination.take,
@@ -31,7 +31,21 @@ export class WorkoutQueryService {
 		return {
 			items: workouts,
 			total,
-			hasMore: pagination.skip + workouts.length < total
+			hasMore: (pagination?.skip ?? 0) + workouts.length < total
 		}
 	}
+
+	async getUserWorkoutByDay (
+		userId: string,
+		date: Date
+	): Promise<WorkoutType> {
+		const workouts = await this.workoutRepository.findByUserIdAndDate(userId, date)
+
+		return {
+			items: workouts,
+			total: workouts.length,
+			hasMore: false 
+		}
+	}
+
 }

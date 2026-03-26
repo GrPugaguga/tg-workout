@@ -2,7 +2,7 @@ import { Field, Int, ObjectType } from "@nestjs/graphql";
 import { Workout } from "../entities";
 
 @ObjectType()
-export class WorkoutDto {
+export class WorkoutType {
     @Field(() => [Workout])
     items: Workout[]
 

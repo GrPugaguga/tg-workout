@@ -9,7 +9,8 @@ import { Workout } from './entities/workout.entity'
 import { WorkoutCommandService } from './workout-command.service'
 import { WorkoutQueryService } from './workout-query.service'
 import { CreateWorkoutInput } from '@app/contracts'
-import { WorkoutDto } from './dto/workout.type'
+import { WorkoutType } from './dto/workout.type'
+import { DateInput } from './dto/getWorkoutByDate.input'
 
 @Resolver(() => Workout)
 export class WorkoutResolver {
@@ -25,13 +26,23 @@ export class WorkoutResolver {
 	}
 
 	@UseGuards(AuthenticatedGuard)
-	@Query(() => WorkoutDto, { name: 'myWorkouts' })
+	@Query(() => WorkoutType, { name: 'myWorkouts' })
 	getMyWorkouts(
 		@CurrentUser() user: FederationUser,
 		@Args('pagination', { nullable: true })
 		pagination: PaginationInput = new PaginationInput()
 	) {
 		return this.queryService.getUserWorkouts(user.id, pagination)
+	}
+
+	@UseGuards(AuthenticatedGuard)
+	@Query(() => WorkoutType , { name: 'myWorkoutsByDate' })
+	getWorkoutsByDay(
+		@CurrentUser() user: FederationUser,
+		@Args('input', { nullable: false })
+		input: DateInput
+	) {
+		return this.queryService.getUserWorkoutByDay(user.id, input.date)
 	}
 
 	@UseGuards(AuthenticatedGuard)

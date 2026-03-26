@@ -10,7 +10,7 @@ export abstract class WorkoutRepositoryPort {
 	abstract findByUserIdAndDate(
 		userId: string,
 		date: Date
-	): Promise<Workout | null>
+	): Promise<Workout[]>
 	abstract countByUserId(userId: string): Promise<number>
 	abstract save(workout: Workout): Promise<Workout>
 	abstract delete(id: string): Promise<boolean>

@@ -1,9 +1,8 @@
 import { CreateWorkoutSetInput } from '@app/contracts'
-import { Field, Float, InputType, Int } from '@nestjs/graphql'
+import { Field, InputType } from '@nestjs/graphql'
 import { Type } from 'class-transformer'
 import {
 	IsArray,
-	IsNumber,
 	IsOptional,
 	IsString,
 	IsUUID,
