@@ -1,0 +1,6 @@
+mutation CreateJwt($initData: String!) {
+  createJwt(initData: $initData) {
+    accessToken
+    expiredAt
+  }
+}

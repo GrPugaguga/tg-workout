@@ -1,0 +1,25 @@
+query MyExercisesList($sort: SortEnum) {
+  myExercisesList(sort: $sort) {
+    id
+    name
+    maxWeight
+  }
+}
+
+query MyExerciseHistory($exercise: String!) {
+  myExerciseHistory(exercise: $exercise) {
+    id
+    name
+    maxWeight
+    history {
+      date
+      maxWeight
+      sets {
+        setNumber
+        weight
+        reps
+        sets
+      }
+    }
+  }
+}

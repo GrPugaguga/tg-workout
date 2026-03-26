@@ -1,0 +1,79 @@
+query MyWorkouts($pagination: PaginationInput) {
+  myWorkouts(pagination: $pagination) {
+    items {
+      id
+      date
+      notes
+      exercises {
+        id
+        exercise {
+          id
+          name
+        }
+        equipment {
+          id
+          name
+        }
+        maxWeight
+        orderIndex
+        sets {
+          setNumber
+          weight
+          reps
+          sets
+        }
+      }
+    }
+    total
+    hasMore
+  }
+}
+
+query MyWorkoutsByDate($input: DateInput!) {
+  myWorkoutsByDate(input: $input) {
+    items {
+      id
+      date
+      notes
+      exercises {
+        id
+        exercise {
+          id
+          name
+        }
+        equipment {
+          id
+          name
+        }
+        maxWeight
+        orderIndex
+        sets {
+          setNumber
+          weight
+          reps
+          sets
+        }
+      }
+    }
+    total
+    hasMore
+  }
+}
+
+query MyWorkoutDates {
+  myWorkoutDates {
+    dates
+  }
+}
+
+mutation CreateWorkout($input: CreateWorkoutInput!) {
+  createWorkout(input: $input) {
+    id
+    date
+    notes
+  }
+}
+
+mutation DeleteWorkout($id: ID!) {
+  deleteWorkout(id: $id)
+}
