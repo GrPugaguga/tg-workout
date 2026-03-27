@@ -25,15 +25,28 @@ export class SyncServiceService implements OnApplicationBootstrap {
 			this.logger.log('Equipment collection already exists')
 		}
 
-		const exercises = await firstValueFrom(
-			this.client.send<ExerciseDocument[]>(EXERCISE_PATTERNS.GET_ALL, {}),
-		)
-		await this.fullSync(exercises)
+		await this.initialSync()
+	}
 
-		const equipment = await firstValueFrom(
-			this.client.send<EquipmentDocument[]>(EQUIPMENT_PATTERNS.GET_ALL, {}),
-		)
-		await this.fullSyncEquipment(equipment)
+	private async initialSync(retries = 5, delay = 3000) {
+		for (let i = 0; i < retries; i++) {
+			try {
+				const exercises = await firstValueFrom(
+					this.client.send<ExerciseDocument[]>(EXERCISE_PATTERNS.GET_ALL, {}),
+				)
+				await this.fullSync(exercises)
+
+				const equipment = await firstValueFrom(
+					this.client.send<EquipmentDocument[]>(EQUIPMENT_PATTERNS.GET_ALL, {}),
+				)
+				await this.fullSyncEquipment(equipment)
+				return
+			} catch (err) {
+				this.logger.warn(`Initial sync failed (attempt ${i + 1}/${retries}): ${err}`)
+				if (i < retries - 1) await new Promise(r => setTimeout(r, delay))
+			}
+		}
+		this.logger.error('Initial sync failed after all retries — will sync on first event')
 	}
 
 	// --- Exercise sync ---

@@ -26,6 +26,7 @@ import { CorrelationIdMiddleware } from './middleware/correlation-id.middleware'
 		GraphQLModule.forRoot<ApolloGatewayDriverConfig>({
 			driver: ApolloGatewayDriver,
 			server: {
+				csrfPrevention: false,
 				context: ({ req, res }) => ({ req, res })
 			},
 			gateway: {
@@ -33,15 +34,15 @@ import { CorrelationIdMiddleware } from './middleware/correlation-id.middleware'
 					subgraphs: [
 						{
 							name: 'users',
-							url: `http://localhost:${ENV.USER_SERVICE_PORT}/graphql`
+							url: `http://${ENV.USER_SERVICE_HOST}:${ENV.USER_SERVICE_PORT}/graphql`
 						},
 						{
 							name: 'workouts',
-							url: `http://localhost:${ENV.WORKOUT_SERVICE_PORT}/graphql`
+							url: `http://${ENV.WORKOUT_SERVICE_HOST}:${ENV.WORKOUT_SERVICE_PORT}/graphql`
 						},
 						{
 							name: 'ai',
-							url: `http://localhost:${ENV.AI_SERVICE_PORT}/graphql`
+							url: `http://${ENV.AI_SERVICE_HOST}:${ENV.AI_SERVICE_PORT}/graphql`
 						}
 					]
 				}),

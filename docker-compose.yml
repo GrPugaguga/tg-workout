@@ -1,4 +1,6 @@
 services:
+  # --- Infrastructure ---
+
   postgres-user:
     image: postgres:16
     container_name: postgres-user
@@ -7,8 +9,6 @@ services:
       POSTGRES_PASSWORD: ${USER_DB_PASSWORD}
     volumes:
       - pgdata-user:/var/lib/postgresql/data
-    ports:
-      - "${USER_DB_PORT}:5432"
     networks:
       - backend_network
 
@@ -20,8 +20,6 @@ services:
       POSTGRES_PASSWORD: ${WORKOUT_DB_PASSWORD}
     volumes:
       - pgdata-workout:/var/lib/postgresql/data
-    ports:
-      - "${WORKOUT_DB_PORT}:5432"
     networks:
       - backend_network
 
@@ -31,9 +29,6 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBIT_USER}
       RABBITMQ_DEFAULT_PASS: ${RABBIT_PASSWORD}
-    ports:
-      - "5672:5672"
-      - "15672:15672"
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq/
     networks:
@@ -41,12 +36,13 @@ services:
 
   typesense:
     image: typesense/typesense:30.1
+    container_name: typesense
     restart: on-failure
-    ports:
-      - "8108:8108"
     volumes:
-      - ./typesense-data:/data
-    command: '--data-dir /data --api-key=xyz --enable-cors'
+      - typesense-data:/data
+    command: '--data-dir /data --api-key=${TYPESENSE_API_KEY:-xyz} --enable-cors'
+    networks:
+      - backend_network
 
   redis:
     image: redis:latest
@@ -54,11 +50,108 @@ services:
     environment:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
       - REDIS_USER=${REDIS_USER}
-    ports:
-      - "${REDIS_PORT}:6379"
     volumes:
-      - ./redisdata:/var/lib/redis/
-        
+      - redis-data:/var/lib/redis/
+    networks:
+      - backend_network
+
+  # --- Application Services ---
+
+  gateway:
+    build:
+      context: .
+      args:
+        APP_NAME: gateway
+    container_name: gateway
+    restart: on-failure
+    ports:
+      - "3000:3000"
+    env_file: .env.docker
+    depends_on:
+      - user-service
+      - workout-service
+      - ai-service
+    networks:
+      - backend_network
+
+  user-service:
+    build:
+      context: .
+      args:
+        APP_NAME: user-service
+    container_name: user-service
+    env_file: .env.docker
+    depends_on:
+      - postgres-user
+      - rabbitmq
+    networks:
+      - backend_network
+
+  workout-service:
+    build:
+      context: .
+      args:
+        APP_NAME: workout-service
+    container_name: workout-service
+    env_file: .env.docker
+    depends_on:
+      - postgres-workout
+      - rabbitmq
+    networks:
+      - backend_network
+
+  ai-service:
+    build:
+      context: .
+      args:
+        APP_NAME: ai-service
+    container_name: ai-service
+    env_file: .env.docker
+    depends_on:
+      - rabbitmq
+    networks:
+      - backend_network
+
+  sync-service:
+    build:
+      context: .
+      args:
+        APP_NAME: sync-service
+    container_name: sync-service
+    env_file: .env.docker
+    depends_on:
+      - rabbitmq
+      - typesense
+      - workout-service
+    networks:
+      - backend_network
+
+  parsing-service:
+    build:
+      context: .
+      args:
+        APP_NAME: parsing-service
+    container_name: parsing-service
+    env_file: .env.docker
+    depends_on:
+      - rabbitmq
+      - typesense
+    networks:
+      - backend_network
+
+  bot-service:
+    build:
+      context: .
+      args:
+        APP_NAME: bot-service
+    container_name: bot-service
+    env_file: .env.docker
+    depends_on:
+      - gateway
+      - rabbitmq
+      - redis
+    networks:
+      - backend_network
 
 networks:
   backend_network:
@@ -68,3 +161,5 @@ volumes:
   pgdata-user:
   pgdata-workout:
   rabbitmq_data:
+  typesense-data:
+  redis-data:

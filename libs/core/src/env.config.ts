@@ -27,18 +27,21 @@ const envSchema = z.object({
 	GATEWAY_PORT: z.coerce.number().default(3000),
 	GATEWAY_URL: z.string().default('http://localhost:3000/graphql'),
 
+	USER_SERVICE_HOST: z.string().default('localhost'),
 	USER_SERVICE_PORT: z.coerce.number().default(3001),
 	USER_DB_HOST: z.string(),
 	USER_DB_PORT: z.coerce.number(),
 	USER_DB_USER: z.string(),
 	USER_DB_PASSWORD: z.string(),
 
+	WORKOUT_SERVICE_HOST: z.string().default('localhost'),
 	WORKOUT_DB_HOST: z.string(),
 	WORKOUT_DB_PORT: z.coerce.number(),
 	WORKOUT_DB_USER: z.string(),
 	WORKOUT_DB_PASSWORD: z.string(),
 	WORKOUT_SERVICE_PORT: z.coerce.number().default(3002),
 
+	AI_SERVICE_HOST: z.string().default('localhost'),
 	AI_SERVICE_PORT: z.coerce.number().default(3003),
 
 	RABBIT_USER: z.string(),

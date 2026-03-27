@@ -79,7 +79,7 @@
       "entryFile": "main",
       "sourceRoot": "apps/parsing-service/src",
       "compilerOptions": {
-        "webpack": false,
+        "webpackConfigPath": "webpack-typesense.config.js",
         "tsConfigPath": "apps/parsing-service/tsconfig.app.json"
       }
     },
@@ -89,7 +89,7 @@
       "entryFile": "main",
       "sourceRoot": "apps/sync-service/src",
       "compilerOptions": {
-        "webpack": false,
+        "webpackConfigPath": "webpack-typesense.config.js",
         "tsConfigPath": "apps/sync-service/tsconfig.app.json"
       }
     },
