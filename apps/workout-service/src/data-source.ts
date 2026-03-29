@@ -1,3 +1,5 @@
+import { join } from 'path'
+
 import { ENV } from '@app/core'
 import { DataSource } from 'typeorm'
 
@@ -18,5 +20,5 @@ export default new DataSource({
 		WorkoutExercise,
 		WorkoutSet
 	],
-	migrations: ['apps/workout-service/src/migrations/*.ts']
+	migrations: [join(__dirname, 'migrations', '*{.ts,.js}')]
 })

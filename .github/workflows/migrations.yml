@@ -17,19 +17,12 @@ jobs:
           script_stop: true
           script: |
             set -e
-            echo "--- Cloning repo ---"
-            rm -rf /tmp/tg-migrate
-            git clone --depth 1 https://github.com/GrPugaguga/tg-workout.git /tmp/tg-migrate
+            cd ~/tg-workout
 
-            echo "--- Running migrations ---"
-            docker run --rm \
-              --network tg-workout_backend_network \
-              -v /tmp/tg-migrate:/app \
-              -w /app \
-              --env-file ~/tg-workout/.env.docker \
-              node:20-alpine \
-              sh -c "npm ci --ignore-scripts && npx typeorm-ts-node-commonjs migration:run -d apps/user-service/src/data-source.ts && npx typeorm-ts-node-commonjs migration:run -d apps/workout-service/src/data-source.ts"
+            echo "--- Running user-service migrations ---"
+            docker compose -f docker-compose.prod.yml exec -T user-service \
+              npx typeorm migration:run -d dist/apps/user-service/data-source.js
 
-            echo "--- Cleanup ---"
-            rm -rf /tmp/tg-migrate
-            docker image prune -f
+            echo "--- Running workout-service migrations ---"
+            docker compose -f docker-compose.prod.yml exec -T workout-service \
+              npx typeorm migration:run -d dist/apps/workout-service/data-source.js

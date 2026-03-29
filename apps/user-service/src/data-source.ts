@@ -1,3 +1,5 @@
+import { join } from 'path'
+
 import { ENV } from '@app/core'
 import { DataSource } from 'typeorm'
 
@@ -10,5 +12,5 @@ export default new DataSource({
 	username: ENV.USER_DB_USER,
 	password: ENV.USER_DB_PASSWORD,
 	entities: [User],
-	migrations: ['apps/user-service/src/migrations/*.ts']
+	migrations: [join(__dirname, 'migrations', '*{.ts,.js}')]
 })
