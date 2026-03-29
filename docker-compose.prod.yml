@@ -1,0 +1,214 @@
+services:
+  # --- Infrastructure ---
+
+  postgres-user:
+    image: postgres:16
+    container_name: postgres-user
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${USER_DB_USER}
+      POSTGRES_PASSWORD: ${USER_DB_PASSWORD}
+    volumes:
+      - pgdata-user:/var/lib/postgresql/data
+    networks:
+      - backend_network
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  postgres-workout:
+    image: postgres:16
+    container_name: postgres-workout
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${WORKOUT_DB_USER}
+      POSTGRES_PASSWORD: ${WORKOUT_DB_PASSWORD}
+    volumes:
+      - pgdata-workout:/var/lib/postgresql/data
+    networks:
+      - backend_network
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBIT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBIT_PASSWORD}
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq/
+    networks:
+      - backend_network
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  typesense:
+    image: typesense/typesense:30.1
+    container_name: typesense
+    restart: unless-stopped
+    volumes:
+      - typesense-data:/data
+    command: '--data-dir /data --api-key=${TYPESENSE_API_KEY:-xyz} --enable-cors'
+    networks:
+      - backend_network
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: unless-stopped
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_USER=${REDIS_USER}
+    volumes:
+      - redis-data:/var/lib/redis/
+    networks:
+      - backend_network
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # --- Application Services ---
+
+  gateway:
+    image: ghcr.io/grpugaguga/tg-workout/gateway:latest
+    container_name: gateway
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file: .env.docker
+    depends_on:
+      - user-service
+      - workout-service
+      - ai-service
+    networks:
+      - backend_network
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  user-service:
+    image: ghcr.io/grpugaguga/tg-workout/user-service:latest
+    container_name: user-service
+    restart: unless-stopped
+    env_file: .env.docker
+    depends_on:
+      - postgres-user
+      - rabbitmq
+    networks:
+      - backend_network
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  workout-service:
+    image: ghcr.io/grpugaguga/tg-workout/workout-service:latest
+    container_name: workout-service
+    restart: unless-stopped
+    env_file: .env.docker
+    depends_on:
+      - postgres-workout
+      - rabbitmq
+    networks:
+      - backend_network
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  ai-service:
+    image: ghcr.io/grpugaguga/tg-workout/ai-service:latest
+    container_name: ai-service
+    restart: unless-stopped
+    env_file: .env.docker
+    depends_on:
+      - rabbitmq
+    networks:
+      - backend_network
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  sync-service:
+    image: ghcr.io/grpugaguga/tg-workout/sync-service:latest
+    container_name: sync-service
+    restart: unless-stopped
+    env_file: .env.docker
+    depends_on:
+      - rabbitmq
+      - typesense
+      - workout-service
+    networks:
+      - backend_network
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  parsing-service:
+    image: ghcr.io/grpugaguga/tg-workout/parsing-service:latest
+    container_name: parsing-service
+    restart: unless-stopped
+    env_file: .env.docker
+    depends_on:
+      - rabbitmq
+      - typesense
+    networks:
+      - backend_network
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  bot-service:
+    image: ghcr.io/grpugaguga/tg-workout/bot-service:latest
+    container_name: bot-service
+    restart: unless-stopped
+    env_file: .env.docker
+    depends_on:
+      - gateway
+      - rabbitmq
+      - redis
+    networks:
+      - backend_network
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  backend_network:
+    driver: bridge
+
+volumes:
+  pgdata-user:
+  pgdata-workout:
+  rabbitmq_data:
+  typesense-data:
+  redis-data:
