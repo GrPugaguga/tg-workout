@@ -27,6 +27,18 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             cd ~/tg-workout
-            docker compose -f docker-compose.prod.yml pull gateway user-service workout-service ai-service sync-service parsing-service bot-service
+            echo "--- Stopping app services ---"
+            docker compose -f docker-compose.prod.yml stop gateway user-service workout-service ai-service sync-service parsing-service bot-service
+            docker compose -f docker-compose.prod.yml rm -f gateway user-service workout-service ai-service sync-service parsing-service bot-service
+            docker image prune -f
+
+            echo "--- Pulling new images ---"
+            for svc in gateway user-service workout-service ai-service sync-service parsing-service bot-service; do
+              echo "Pulling $svc..."
+              docker compose -f docker-compose.prod.yml pull $svc
+              docker image prune -f
+            done
+
+            echo "--- Starting all services ---"
             docker compose -f docker-compose.prod.yml up -d
             docker image prune -f

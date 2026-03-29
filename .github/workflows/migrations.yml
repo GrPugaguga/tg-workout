@@ -1,0 +1,35 @@
+name: Run Migrations
+
+on:
+  workflow_dispatch:
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run migrations on VPS
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script_stop: true
+          script: |
+            set -e
+            echo "--- Cloning repo ---"
+            rm -rf /tmp/tg-migrate
+            git clone --depth 1 https://github.com/GrPugaguga/tg-workout.git /tmp/tg-migrate
+
+            echo "--- Running migrations ---"
+            docker run --rm \
+              --network tg-workout_backend_network \
+              -v /tmp/tg-migrate:/app \
+              -w /app \
+              --env-file ~/tg-workout/.env.docker \
+              node:20-alpine \
+              sh -c "npm ci --ignore-scripts && npx typeorm-ts-node-commonjs migration:run -d apps/user-service/src/data-source.ts && npx typeorm-ts-node-commonjs migration:run -d apps/workout-service/src/data-source.ts"
+
+            echo "--- Cleanup ---"
+            rm -rf /tmp/tg-migrate
+            docker image prune -f
