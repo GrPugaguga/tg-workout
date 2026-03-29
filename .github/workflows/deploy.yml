@@ -27,6 +27,6 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             cd ~/tg-workout
-            docker compose -f docker-compose.prod.yml pull
+            docker compose -f docker-compose.prod.yml pull gateway user-service workout-service ai-service sync-service parsing-service bot-service
             docker compose -f docker-compose.prod.yml up -d
             docker image prune -f
