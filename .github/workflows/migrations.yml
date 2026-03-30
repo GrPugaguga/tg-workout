@@ -21,8 +21,8 @@ jobs:
 
             echo "--- Running user-service migrations ---"
             docker compose -f docker-compose.prod.yml exec -T user-service \
-              npx typeorm migration:run -d dist/apps/user-service/data-source.js
+              npx typeorm-ts-node-commonjs migration:run -d apps/user-service/src/data-source.ts
 
             echo "--- Running workout-service migrations ---"
             docker compose -f docker-compose.prod.yml exec -T workout-service \
-              npx typeorm migration:run -d dist/apps/workout-service/data-source.js
+              npx typeorm-ts-node-commonjs migration:run -d apps/workout-service/src/data-source.ts

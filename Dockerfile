@@ -30,6 +30,12 @@ COPY --from=build /app/dist ./dist
 ARG APP_NAME
 ENV APP_NAME=${APP_NAME}
 
+# Source files for migrations (ts-node + tsconfig-paths)
+COPY --from=build /app/tsconfig.json ./tsconfig.json
+COPY --from=build /app/package.json ./package.json
+COPY --from=build /app/apps/${APP_NAME}/src ./apps/${APP_NAME}/src
+COPY --from=build /app/libs ./libs
+
 USER appuser
 
 CMD ["sh", "-c", "node $(find dist/apps/${APP_NAME} -name main.js | head -1)"]
