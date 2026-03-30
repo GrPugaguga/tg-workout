@@ -86,13 +86,10 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@apollo/client": "^4.1.6",
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.18.0",
     "@graphql-codegen/cli": "^6.2.1",
-    "@graphql-codegen/typescript": "^5.0.9",
-    "@graphql-codegen/typescript-operations": "^5.0.9",
-    "@graphql-codegen/typescript-react-apollo": "^4.4.1",
+    "@graphql-codegen/client-preset": "^4.0.0",
     "@nestjs/cli": "^11.0.0",
     "@nestjs/schematics": "^11.0.0",
     "@nestjs/testing": "^11.0.1",

@@ -7,6 +7,7 @@ import { GatewayModule } from './gateway.module'
 async function bootstrap() {
 	const app = await NestFactory.create(GatewayModule, { bufferLogs: true })
 	app.useLogger(app.get(Logger))
+	app.enableCors()
 	await app.listen(ENV.GATEWAY_PORT)
 }
 bootstrap()
