@@ -60,6 +60,7 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 !webpack-typesense.config.js
 *.js.map
 *.d.ts
+!apps/frontend/types/telegram.d.ts
 dist/
 build/
 
