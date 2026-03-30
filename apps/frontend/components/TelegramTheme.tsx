@@ -2,16 +2,6 @@
 
 import { useEffect } from "react";
 
-declare global {
-  interface Window {
-    Telegram?: {
-      WebApp: {
-        colorScheme: "light" | "dark";
-      };
-    };
-  }
-}
-
 export function TelegramTheme() {
   useEffect(() => {
     const tg = window.Telegram?.WebApp;

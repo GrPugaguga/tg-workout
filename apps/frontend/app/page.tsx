@@ -3,62 +3,106 @@
 import { Workout } from "@/components/cards/Workout";
 import type { IWorkout } from "@/components/cards/Workout";
 import { Calendar } from "@/components/Calendar";
+import {
+  DeleteWorkoutDocument,
+  MyWorkoutDatesDocument,
+  MyWorkoutsDocument,
+  MyWorkoutsByDateDocument,
+  type MyWorkoutsQuery,
+  SortEnum,
+} from "@/generated/graphql";
+import { useAuth } from "@/lib/auth";
+import { useMutation, useQuery } from "@apollo/client/react";
 import Image from "next/image";
 import { useState } from "react";
 import { createPortal } from "react-dom";
 
-const mockWorkout: IWorkout = {
-  id: "1",
-  date: "15/03/2026",
-  exercises: [
-    {
-      title: "Жим штанги лёжа",
-      sets: [
-        { sets: 3, reps: 8, weight: 70 },
-        { sets: 2, reps: 6, weight: 80 },
-      ],
-    },
-    {
-      title: "Присед со штангой",
-      sets: [
-        { sets: 4, reps: 10, weight: 90 },
-      ],
-    },
-    {
-      title: "Тяга верхнего блока",
-      sets: [
-        { sets: 3, reps: 12, weight: 55 },
-        { sets: 1, reps: 10, weight: 60 },
-      ],
-    },
-  ],
-};
+const PAGE_SIZE = 10;
+
+type WorkoutItem = MyWorkoutsQuery["myWorkouts"]["items"][number];
+
+function toIWorkout(item: WorkoutItem): IWorkout {
+  return {
+    id: item.id,
+    date: item.date,
+    exercises: item.exercises.map((ex) => ({
+      title: ex.exercise.name,
+      sets: ex.sets.map((s) => ({
+        sets: s.sets,
+        reps: s.reps ?? undefined,
+        weight: s.weight ?? undefined,
+      })),
+    })),
+  };
+}
 
 export default function Home() {
-  const [isASCSortType, setIsASCSortType] = useState(true)
-  const [showCalendar, setShowCalendar] = useState(false)
-  const [selectedDate, setSelectedDate] = useState<string | null>(null)
+  const { loading: authLoading } = useAuth();
+  const [isASCSortType, setIsASCSortType] = useState(true);
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
-  const workoutDates = [mockWorkout.date];
+  const sort = isASCSortType ? SortEnum.Desc : SortEnum.Asc;
+
+  const { data: allData, fetchMore } = useQuery(MyWorkoutsDocument, {
+    variables: { pagination: { take: PAGE_SIZE, sort } },
+    skip: authLoading || !!selectedDate,
+  });
+
+  const { data: dateData } = useQuery(MyWorkoutsByDateDocument, {
+    variables: { input: { date: selectedDate! } },
+    skip: authLoading || !selectedDate,
+  });
+
+  const { data: datesData } = useQuery(MyWorkoutDatesDocument, {
+    skip: authLoading,
+  });
+
+  const [deleteWorkout] = useMutation(DeleteWorkoutDocument, {
+    update(cache, _, { variables }) {
+      if (variables?.id) {
+        cache.evict({ id: cache.identify({ __typename: "Workout", id: variables.id }) });
+        cache.gc();
+      }
+    },
+  });
+
+  const items = selectedDate
+    ? (dateData?.myWorkoutsByDate.items ?? [])
+    : (allData?.myWorkouts.items ?? []);
+
+  const workoutDates = datesData?.myWorkoutDates.dates ?? [];
+  const hasMore = !selectedDate && (allData?.myWorkouts.hasMore ?? false);
+
+  function loadMore() {
+    fetchMore({ variables: { pagination: { skip: items.length, take: PAGE_SIZE, sort } } });
+  }
 
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-4">
         <div className="flex flex-row justify-between">
           <span className="leading-6 font-semibold text-[18px] tracking-[-0.45px] text-txt">Тренировки</span>
-          <Image src="/svg/calendar/calendar.svg" alt="sort" width={22} height={22} className="cursor-pointer" onClick={() => setShowCalendar(true)}/>
+          <Image src="/svg/calendar/calendar.svg" alt="sort" width={22} height={22} className="cursor-pointer" onClick={() => setShowCalendar(true)} />
         </div>
-        <div className="flex flex-row gap-2.5" onClick={() => setIsASCSortType(!isASCSortType)}>
-          <Image src="/svg/header/sort.svg" alt="sort" width={22} height={22}/>
-          <span className="text-[14px] text-grey-dark leading-5.5 font-semibold">{isASCSortType? 'Недавно ': 'Давно '} выполненные</span>
+        <div className="flex flex-row gap-2.5" onClick={() => { setIsASCSortType(!isASCSortType); setSelectedDate(null); }}>
+          <Image src="/svg/header/sort.svg" alt="sort" width={22} height={22} />
+          <span className="text-[14px] text-grey-dark leading-5.5 font-semibold">{isASCSortType ? "Недавно " : "Давно "} выполненные</span>
         </div>
       </div>
       <div className="flex flex-col gap-4">
-        <Workout data={mockWorkout} onDelete={() => console.log('delete')} />
-        <Workout data={mockWorkout} onDelete={() => console.log('delete')} />
-        <Workout data={mockWorkout} onDelete={() => console.log('delete')} />
-        <Workout data={mockWorkout} onDelete={() => console.log('delete')} />
-        <Workout data={mockWorkout} onDelete={() => console.log('delete')} />
+        {items.map((item) => (
+          <Workout
+            key={item.id}
+            data={toIWorkout(item)}
+            onDelete={() => deleteWorkout({ variables: { id: item.id } })}
+          />
+        ))}
+        {hasMore && (
+          <button onClick={loadMore} className="text-[14px] text-grey-dark text-center py-2">
+            Загрузить ещё
+          </button>
+        )}
       </div>
       {showCalendar && createPortal(
         <div className="fixed inset-0 bg-black/40 flex items-start justify-center z-50 pt-6">
