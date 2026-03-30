@@ -39,7 +39,7 @@ export default function ExercisesPage({ params }: { params: Promise<{ id: string
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-row justify-between">
-        <Image src="/svg/exercise/back.svg" alt="back" width={22} height={22} className="self-center cursor-pointer" onClick={router.back} />
+        <Image src="/svg/exercise/back.svg" alt="back" width={22} height={22} className="self-center cursor-pointer" onClick={router.back} priority/>
         <span className="w-full text-center leading-6 font-semibold text-[18px] tracking-[-0.45px] text-txt">
           {exercise?.name ?? ''}
         </span>

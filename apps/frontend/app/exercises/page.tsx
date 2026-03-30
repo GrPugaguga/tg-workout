@@ -25,7 +25,7 @@ export default function ExercisesPage() {
       <div className="flex flex-col gap-4">
         <span className="leading-6 font-semibold text-[18px] tracking-[-0.45px] text-txt">Упражнения</span>
         <div className="flex flex-row gap-2.5" onClick={() => setIsASCSortType(!isASCSortType)}>
-          <Image src="/svg/header/sort.svg" alt="sort" width={22} height={22} />
+          <Image src="/svg/header/sort.svg" alt="sort" width={22} height={22} priority/>
           <span className="text-[14px] text-grey-dark leading-5.5 font-semibold">{isASCSortType ? 'Недавно ' : 'Давно '} выполненные</span>
         </div>
       </div>

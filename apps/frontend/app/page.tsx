@@ -83,10 +83,10 @@ export default function Home() {
       <div className="flex flex-col gap-4">
         <div className="flex flex-row justify-between">
           <span className="leading-6 font-semibold text-[18px] tracking-[-0.45px] text-txt">Тренировки</span>
-          <Image src="/svg/calendar/calendar.svg" alt="sort" width={22} height={22} className="cursor-pointer" onClick={() => setShowCalendar(true)} />
+          <Image src="/svg/calendar/calendar.svg" alt="sort" width={22} height={22} className="cursor-pointer" onClick={() => setShowCalendar(true)} priority/>
         </div>
         <div className="flex flex-row gap-2.5" onClick={() => { setIsASCSortType(!isASCSortType); setSelectedDate(null); }}>
-          <Image src="/svg/header/sort.svg" alt="sort" width={22} height={22} />
+          <Image src="/svg/header/sort.svg" alt="sort" width={22} height={22} priority/>
           <span className="text-[14px] text-grey-dark leading-5.5 font-semibold">{isASCSortType ? "Недавно " : "Давно "} выполненные</span>
         </div>
       </div>
