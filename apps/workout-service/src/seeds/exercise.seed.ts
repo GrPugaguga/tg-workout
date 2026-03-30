@@ -89,18 +89,21 @@ async function seed() {
 		// Грудь
 		{
 			name: 'Жим лёжа',
+			description: "" , 
 			aliases: ['жим штанги лёжа', 'жим лежа'],
 			muscleGroups: [mg.chest, mg.front_delt, mg.triceps],
 			equipment: [eq.barbell],
 		},
 		{
 			name: 'Жим гантелей лёжа',
+			description: "" , 
 			aliases: ['жим гантелей'],
 			muscleGroups: [mg.chest, mg.front_delt, mg.triceps],
 			equipment: [eq.dumbbell],
 		},
 		{
 			name: 'Жим лёжа на наклонной',
+			description: "" , 
 			aliases: ['наклонный жим', 'жим на наклонной'],
 			muscleGroups: [mg.chest, mg.front_delt, mg.triceps],
 			equipment: [eq.barbell],
@@ -108,41 +111,48 @@ async function seed() {
 		{
 			name: 'Жим гантелей на наклонной',
 			aliases: ['наклонный жим гантелей'],
+			description: "" , 
 			muscleGroups: [mg.chest, mg.front_delt, mg.triceps],
 			equipment: [eq.dumbbell],
 		},
 		{
 			name: 'Жим на грудь в тренажёре',
+			description: "" , 
 			aliases: ['грудной тренажёр', 'жим в тренажёре на грудь'],
 			muscleGroups: [mg.chest, mg.front_delt, mg.triceps],
 			equipment: [eq.machine],
 		},
 		{
 			name: 'Разводка гантелей лёжа',
+			description: "" , 
 			aliases: ['разводка', 'разведения с гантелями'],
 			muscleGroups: [mg.chest, mg.front_delt],
 			equipment: [eq.dumbbell],
 		},
 		{
 			name: 'Разводка в тренажёре',
+			description: "" , 
 			aliases: ['сведения в тренажёре', 'баттерфляй'],
 			muscleGroups: [mg.chest],
 			equipment: [eq.machine],
 		},
 		{
 			name: 'Кроссовер на блоке',
+			description: "" , 
 			aliases: ['кроссовер', 'сведение в кроссовере'],
 			muscleGroups: [mg.chest, mg.front_delt],
 			equipment: [eq.cable],
 		},
 		{
 			name: 'Отжимания от пола',
+			description: "" , 
 			aliases: ['отжимания'],
 			muscleGroups: [mg.chest, mg.front_delt, mg.triceps],
 			equipment: [eq.bodyweight],
 		},
 		{
 			name: 'Отжимания на брусьях',
+			description: "" , 
 			aliases: ['брусья', 'дипы'],
 			muscleGroups: [mg.chest, mg.triceps, mg.front_delt],
 			equipment: [eq.dip_bar],
@@ -151,48 +161,56 @@ async function seed() {
 		// Широчайшие / Спина
 		{
 			name: 'Подтягивания широким хватом',
+			description: "" , 
 			aliases: ['подтягивания', 'подтяги'],
 			muscleGroups: [mg.back, mg.biceps, mg.rhomboids],
 			equipment: [eq.pullup_bar],
 		},
 		{
 			name: 'Подтягивания обратным хватом',
+			description: "" , 
 			aliases: ['подтягивания узким хватом', 'обратный хват'],
 			muscleGroups: [mg.back, mg.biceps, mg.rhomboids],
 			equipment: [eq.pullup_bar],
 		},
 		{
 			name: 'Тяга верхнего блока',
+			description: "" , 
 			aliases: ['верхний блок', 'тяга блока'],
 			muscleGroups: [mg.back, mg.biceps, mg.rhomboids],
 			equipment: [eq.cable],
 		},
 		{
 			name: 'Тяга нижнего блока',
+			description: "" , 
 			aliases: ['нижний блок', 'горизонтальная тяга'],
 			muscleGroups: [mg.back, mg.rhomboids, mg.biceps, mg.traps],
 			equipment: [eq.cable],
 		},
 		{
 			name: 'Тяга штанги к поясу',
+			description: "" , 
 			aliases: ['тяга штанги в наклоне', 'тяга в наклоне'],
 			muscleGroups: [mg.back, mg.rhomboids, mg.biceps, mg.traps, mg.lower_back],
 			equipment: [eq.barbell],
 		},
 		{
 			name: 'Тяга гантели к поясу',
+			description: "" , 
 			aliases: ['тяга гантели', 'тяга гантели в наклоне'],
 			muscleGroups: [mg.back, mg.rhomboids, mg.biceps],
 			equipment: [eq.dumbbell],
 		},
 		{
 			name: 'Пуловер с гантелью',
+			description: "" , 
 			aliases: ['пуловер'],
 			muscleGroups: [mg.back, mg.chest],
 			equipment: [eq.dumbbell],
 		},
 		{
 			name: 'Тяга Т-грифа',
+			description: "" , 
 			aliases: ['т-гриф'],
 			muscleGroups: [mg.back, mg.rhomboids, mg.biceps, mg.traps],
 			equipment: [eq.barbell],
@@ -201,18 +219,21 @@ async function seed() {
 		// Трапеции
 		{
 			name: 'Шраги',
+			description: "" , 
 			aliases: ['шраги со штангой', 'шраги с гантелями'],
 			muscleGroups: [mg.traps, mg.forearms],
 			equipment: [eq.barbell, eq.dumbbell],
 		},
 		{
 			name: 'Фермерская походка',
+			description: "" , 
 			aliases: ['фермерская прогулка', 'фермер'],
 			muscleGroups: [mg.traps, mg.forearms, mg.core],
 			equipment: [eq.dumbbell],
 		},
 		{
 			name: 'Тяга к подбородку',
+			description: "" , 
 			aliases: ['протяжка', 'тяга штанги к подбородку'],
 			muscleGroups: [mg.traps, mg.mid_delt, mg.front_delt],
 			equipment: [eq.barbell, eq.dumbbell],
@@ -221,12 +242,14 @@ async function seed() {
 		// Ромбовидные + Задняя дельта
 		{
 			name: 'Тяга к лицу',
+			description: "" , 
 			aliases: ['face pull', 'тяга каната к лицу'],
 			muscleGroups: [mg.rhomboids, mg.rear_delt, mg.traps],
 			equipment: [eq.cable],
 		},
 		{
 			name: 'Разводка в наклоне',
+			description: "" , 
 			aliases: ['обратные разводки', 'разводка гантелей в наклоне'],
 			muscleGroups: [mg.rhomboids, mg.rear_delt, mg.traps],
 			equipment: [eq.dumbbell],
@@ -235,12 +258,14 @@ async function seed() {
 		// Поясница
 		{
 			name: 'Гиперэкстензия',
+			description: "" , 
 			aliases: ['гипер', 'разгибание спины'],
 			muscleGroups: [mg.lower_back, mg.glutes, mg.hamstrings],
 			equipment: [eq.machine],
 		},
 		{
 			name: 'Наклоны со штангой',
+			description: "" , 
 			aliases: ['good morning', 'гуд морнинг'],
 			muscleGroups: [mg.lower_back, mg.hamstrings, mg.glutes],
 			equipment: [eq.barbell],
@@ -249,42 +274,49 @@ async function seed() {
 		// Дельты
 		{
 			name: 'Жим гантелей сидя',
+			description: "" , 
 			aliases: ['жим гантелей над головой', 'жим сидя'],
 			muscleGroups: [mg.mid_delt, mg.front_delt, mg.triceps],
 			equipment: [eq.dumbbell],
 		},
 		{
 			name: 'Жим в Смите',
+			description: "" , 
 			aliases: ['армейский жим в смите', 'жим в смите сидя'],
 			muscleGroups: [mg.mid_delt, mg.front_delt, mg.triceps],
 			equipment: [eq.machine],
 		},
 		{
 			name: 'Жим за голову',
+			description: "" , 
 			aliases: ['армейский жим за голову', 'жим штанги за голову'],
 			muscleGroups: [mg.mid_delt, mg.front_delt, mg.triceps],
 			equipment: [eq.barbell],
 		},
 		{
 			name: 'Махи вперёд',
+			description: "" , 
 			aliases: ['подъём гантелей перед собой', 'фронтальные махи'],
 			muscleGroups: [mg.front_delt],
 			equipment: [eq.dumbbell],
 		},
 		{
 			name: 'Махи в стороны',
+			description: "" , 
 			aliases: ['разводка стоя', 'латеральные махи'],
 			muscleGroups: [mg.mid_delt],
 			equipment: [eq.dumbbell],
 		},
 		{
 			name: 'Махи в тренажёре',
+			description: "" , 
 			aliases: ['разводка в тренажёре на плечи'],
 			muscleGroups: [mg.mid_delt],
 			equipment: [eq.machine],
 		},
 		{
 			name: 'Обратные разводки в тренажёре',
+			description: "" , 
 			aliases: ['обратная бабочка', 'задняя дельта в тренажёре'],
 			muscleGroups: [mg.rear_delt, mg.rhomboids],
 			equipment: [eq.machine],
@@ -293,36 +325,42 @@ async function seed() {
 		// Бицепс
 		{
 			name: 'Подъём штанги на бицепс',
+			description: "" , 
 			aliases: ['бицепс со штангой', 'подъём на бицепс'],
 			muscleGroups: [mg.biceps, mg.forearms],
 			equipment: [eq.barbell, eq['ez-bar']],
 		},
 		{
 			name: 'Подъём гантелей на бицепс',
+			description: "" , 
 			aliases: ['бицепс с гантелями', 'сгибания с гантелями'],
 			muscleGroups: [mg.biceps, mg.forearms],
 			equipment: [eq.dumbbell],
 		},
 		{
 			name: 'Молотки',
+			description: "" , 
 			aliases: ['молоток', 'сгибания нейтральным хватом'],
 			muscleGroups: [mg.biceps, mg.forearms],
 			equipment: [eq.dumbbell],
 		},
 		{
 			name: 'Скамья Скотта',
+			description: "" , 
 			aliases: ['скотт', 'сгибания на скамье скотта'],
 			muscleGroups: [mg.biceps, mg.forearms],
 			equipment: [eq.barbell, eq['ez-bar'], eq.dumbbell],
 		},
 		{
 			name: 'Сгибания на блоке',
+			description: "" , 
 			aliases: ['бицепс на блоке', 'тяга блока на бицепс'],
 			muscleGroups: [mg.biceps, mg.forearms],
 			equipment: [eq.cable],
 		},
 		{
 			name: 'Тренажёр на бицепс',
+			description: "" , 
 			aliases: ['сгибания в тренажёре'],
 			muscleGroups: [mg.biceps],
 			equipment: [eq.machine],
@@ -331,24 +369,28 @@ async function seed() {
 		// Трицепс
 		{
 			name: 'Французский жим',
+			description: "" , 
 			aliases: ['французский', 'трицепс лёжа', 'skull crusher'],
 			muscleGroups: [mg.triceps],
 			equipment: [eq.barbell, eq['ez-bar'], eq.dumbbell],
 		},
 		{
 			name: 'Разгибания на блоке',
+			description: "" , 
 			aliases: ['трицепс на блоке', 'разгибание рук на блоке'],
 			muscleGroups: [mg.triceps],
 			equipment: [eq.cable],
 		},
 		{
 			name: 'Жим узким хватом',
+			description: "" , 
 			aliases: ['жим штанги узким хватом'],
 			muscleGroups: [mg.triceps, mg.chest, mg.front_delt],
 			equipment: [eq.barbell],
 		},
 		{
 			name: 'Разгибания с гантелью из-за головы',
+			description: "" , 
 			aliases: ['французский жим сидя', 'трицепс из-за головы'],
 			muscleGroups: [mg.triceps],
 			equipment: [eq.dumbbell],
@@ -357,6 +399,7 @@ async function seed() {
 		// Плечи (добавка)
 		{
 			name: 'Жим Арнольда',
+			description: "" , 
 			aliases: ['арнольд', 'жим арнольда'],
 			muscleGroups: [mg.front_delt, mg.mid_delt, mg.triceps],
 			equipment: [eq.dumbbell],
@@ -365,18 +408,21 @@ async function seed() {
 		// Ягодичные
 		{
 			name: 'Ягодичный мост',
+			description: "" , 
 			aliases: ['ягодичный мостик', 'мост'],
 			muscleGroups: [mg.glutes, mg.hamstrings],
 			equipment: [eq.barbell, eq.bodyweight],
 		},
 		{
 			name: 'Отведение ноги в блоке',
+			description: "" , 
 			aliases: ['отведение ноги', 'кик-бэк на блоке'],
 			muscleGroups: [mg.glutes, mg.glutes_med],
 			equipment: [eq.cable],
 		},
 		{
 			name: 'Разведение ног в тренажёре',
+			description: "" , 
 			aliases: ['разведения', 'абдуктор'],
 			muscleGroups: [mg.glutes_med, mg.adductors],
 			equipment: [eq.machine],
@@ -385,42 +431,49 @@ async function seed() {
 		// Квадрицепс
 		{
 			name: 'Присед со штангой',
+			description: "" , 
 			aliases: ['присед', 'приседания', 'приседания со штангой'],
 			muscleGroups: [mg.quads, mg.glutes, mg.hamstrings, mg.core],
 			equipment: [eq.barbell],
 		},
 		{
 			name: 'Присед плие',
+			description: "" , 
 			aliases: ['плие', 'приседания плие', 'присед сумо'],
 			muscleGroups: [mg.quads, mg.adductors, mg.glutes],
 			equipment: [eq.barbell, eq.dumbbell],
 		},
 		{
 			name: 'Жим ногами',
+			description: "" , 
 			aliases: ['жим платформы', 'жим ног'],
 			muscleGroups: [mg.quads, mg.glutes, mg.hamstrings],
 			equipment: [eq.machine],
 		},
 		{
 			name: 'Разгибание ног в тренажёре',
+			description: "" , 
 			aliases: ['разгибание ног', 'квадрицепс в тренажёре'],
 			muscleGroups: [mg.quads],
 			equipment: [eq.machine],
 		},
 		{
 			name: 'Выпады',
+			description: "" , 
 			aliases: ['выпады вперёд', 'выпады с гантелями'],
 			muscleGroups: [mg.quads, mg.glutes, mg.hamstrings],
 			equipment: [eq.dumbbell, eq.barbell, eq.bodyweight],
 		},
 		{
 			name: 'Болгарские выпады с гантелями',
+			description: "" , 
 			aliases: ['болгарский сплит', 'болгарские выпады'],
 			muscleGroups: [mg.quads, mg.glutes, mg.hamstrings],
 			equipment: [eq.dumbbell],
 		},
 		{
 			name: 'Болгарский присед',
+			description: "" , 
 			aliases: ['болгарский присед со штангой'],
 			muscleGroups: [mg.quads, mg.glutes, mg.hamstrings],
 			equipment: [eq.barbell],
@@ -429,30 +482,35 @@ async function seed() {
 		// Бицепс бедра
 		{
 			name: 'Становая тяга',
+			description: "" , 
 			aliases: ['тяга', 'становая', 'классическая тяга'],
 			muscleGroups: [mg.hamstrings, mg.glutes, mg.lower_back, mg.quads, mg.traps],
 			equipment: [eq.barbell],
 		},
 		{
 			name: 'Становая тяга сумо',
+			description: "" , 
 			aliases: ['тяга сумо', 'сумо'],
 			muscleGroups: [mg.hamstrings, mg.glutes, mg.adductors, mg.lower_back],
 			equipment: [eq.barbell],
 		},
 		{
 			name: 'Румынская тяга',
+			description: "" , 
 			aliases: ['румынка', 'RDL', 'тяга на прямых ногах'],
 			muscleGroups: [mg.hamstrings, mg.glutes, mg.lower_back],
 			equipment: [eq.barbell, eq.dumbbell],
 		},
 		{
 			name: 'Мёртвая тяга',
+			description: "" , 
 			aliases: ['мертвая тяга', 'тяга на прямых'],
 			muscleGroups: [mg.hamstrings, mg.lower_back],
 			equipment: [eq.barbell],
 		},
 		{
 			name: 'Сгибание ног в тренажёре',
+			description: "" , 
 			aliases: ['сгибание ног', 'бицепс бедра в тренажёре'],
 			muscleGroups: [mg.hamstrings],
 			equipment: [eq.machine],
@@ -461,6 +519,7 @@ async function seed() {
 		// Приводящие
 		{
 			name: 'Приведение ног в тренажёре',
+			description: "" , 
 			aliases: ['приводящие', 'аддуктор'],
 			muscleGroups: [mg.adductors],
 			equipment: [eq.machine],
@@ -469,12 +528,14 @@ async function seed() {
 		// Икры
 		{
 			name: 'Подъём на носки стоя',
+			description: "" , 
 			aliases: ['икры стоя', 'подъём на икры'],
 			muscleGroups: [mg.calves],
 			equipment: [eq.machine, eq.bodyweight],
 		},
 		{
 			name: 'Подъём на носки сидя',
+			description: "" , 
 			aliases: ['икры сидя'],
 			muscleGroups: [mg.calves],
 			equipment: [eq.machine],
@@ -483,12 +544,14 @@ async function seed() {
 		// Предплечья
 		{
 			name: 'Сгибания запястий со штангой',
+			description: "" , 
 			aliases: ['сгибания запястий', 'запястья'],
 			muscleGroups: [mg.forearms],
 			equipment: [eq.barbell],
 		},
 		{
 			name: 'Обратные сгибания запястий',
+			description: "" , 
 			aliases: ['разгибания запястий'],
 			muscleGroups: [mg.forearms],
 			equipment: [eq.barbell, eq.dumbbell],
@@ -497,18 +560,21 @@ async function seed() {
 		// Пресс
 		{
 			name: 'Скручивания',
+			description: "" , 
 			aliases: ['пресс', 'кранчи'],
 			muscleGroups: [mg.core],
 			equipment: [eq.bodyweight],
 		},
 		{
 			name: 'Подъём ног в висе',
+			description: "" , 
 			aliases: ['подъём ног на перекладине', 'уголок на турнике'],
 			muscleGroups: [mg.core],
 			equipment: [eq.pullup_bar],
 		},
 		{
 			name: 'Подъём ног на брусьях',
+			description: "" , 
 			aliases: ['уголок на брусьях'],
 			muscleGroups: [mg.core],
 			equipment: [eq.dip_bar],
