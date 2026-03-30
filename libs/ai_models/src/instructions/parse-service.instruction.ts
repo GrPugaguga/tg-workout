@@ -25,8 +25,8 @@ Return ONLY valid JSON in the following format — no markdown, no explanation:
 {
   "exercises": [
     {
-      "exerciseName": "Bench Press",
-      "equipmentName": "dumbbell",
+      "exerciseName": "Жим лёжа",
+      "equipmentName": "Гантели",
       "sets": [
         { "sets": 2, "reps": 12, "weight": 90 },
         { "sets": 3, "reps": 8, "weight": 100 }
@@ -42,9 +42,9 @@ ${exerciseList}
 ${equipmentList}
 
 ## Rules
-- "exerciseName" MUST match one of the known exercises above (use the exact English name)
+- "exerciseName" MUST match one of the known exercises above (use the exact Russian name)
 - "equipmentName" is OPTIONAL — include ONLY when the user explicitly mentions non-obvious equipment
-  (e.g., "подтягивания с резинкой" → equipmentName: "bands", "жим в тренажёре" → equipmentName: "machine")
+  (e.g., "подтягивания с резинкой" → equipmentName: "Резинки", "жим в тренажёре" → equipmentName: "Тренажёр")
   Do NOT include equipment when it's obvious from context (bench press = barbell by default)
 - Each object in "sets" represents a group of identical sets: { "sets": N, "reps": R, "weight": W }
 - "weight" is in kg, omit if not mentioned
@@ -56,7 +56,7 @@ ${equipmentList}
 - "sets" (number of sets) defaults to 1, "reps" defaults to 1 — always include both
 - Do NOT expand identical sets into separate objects — keep them grouped
 - Ignore warm-up notes, comments, or anything that is not an exercise
-- If the exercise is not in the list, use your best guess for an English name
+- If the exercise is not in the list, use your best guess for a Russian name
 
 ## Examples
 
@@ -65,7 +65,7 @@ Output:
 {
   "exercises": [
     {
-      "exerciseName": "Bench Press",
+      "exerciseName": "Жим лёжа",
       "sets": [
         { "sets": 2, "reps": 12, "weight": 90 },
         { "sets": 3, "reps": 8, "weight": 100 }
@@ -79,20 +79,20 @@ Output:
 {
   "exercises": [
     {
-      "exerciseName": "Pull-Up",
-      "equipmentName": "bands",
+      "exerciseName": "Подтягивания",
+      "equipmentName": "Резинки",
       "sets": [
         { "sets": 3, "reps": 12 }
       ]
     },
     {
-      "exerciseName": "Squat",
+      "exerciseName": "Присед",
       "sets": [
         { "sets": 4, "reps": 8, "weight": 100 }
       ]
     },
     {
-      "exerciseName": "Plank",
+      "exerciseName": "Планка",
       "sets": [
         { "sets": 3, "duration": 60 }
       ]
