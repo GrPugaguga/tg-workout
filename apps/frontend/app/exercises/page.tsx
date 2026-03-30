@@ -21,7 +21,7 @@ export default function ExercisesPage() {
   const items = data?.myExercisesList ?? [];
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5 w-87.5">
       <div className="flex flex-col gap-4">
         <span className="leading-6 font-semibold text-[18px] tracking-[-0.45px] text-txt">Упражнения</span>
         <div className="flex flex-row gap-2.5" onClick={() => setIsASCSortType(!isASCSortType)}>
