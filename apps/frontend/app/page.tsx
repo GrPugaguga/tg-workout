@@ -11,7 +11,7 @@ import {
   type MyWorkoutsQuery,
   SortEnum,
 } from "@/generated/graphql";
-import { useAuth } from "@/lib/auth";
+import { useTelegram } from "@/lib/telegram";
 import { useMutation, useQuery } from "@apollo/client/react";
 import Image from "next/image";
 import { useState } from "react";
@@ -37,7 +37,7 @@ function toIWorkout(item: WorkoutItem): IWorkout {
 }
 
 export default function Home() {
-  const { loading: authLoading } = useAuth();
+  const { loading: authLoading } = useTelegram();
   const [isASCSortType, setIsASCSortType] = useState(true);
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);

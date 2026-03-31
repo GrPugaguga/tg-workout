@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { TelegramTheme } from "@/components/TelegramTheme";
 import { Footer } from "@/components/Footer";
-import { AuthProvider } from "@/lib/auth";
+import { TelegramProvider } from "@/lib/telegram";
 import { ApolloWrapper } from "@/lib/apollo";
 
 export const metadata: Metadata = {
@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col pt-5 pb-25 flex flex-col items-center">
-        <AuthProvider>
+        <TelegramProvider>
           <ApolloWrapper>
             <TelegramTheme />
             {children}
@@ -26,7 +26,7 @@ export default function RootLayout({
               <Footer />
             </div>
           </ApolloWrapper>
-        </AuthProvider>
+        </TelegramProvider>
       </body>
     </html>
   );

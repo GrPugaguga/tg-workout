@@ -4,7 +4,7 @@ import { Chart } from "@/components/cards/Chart";
 import { ExerciseHistory } from "@/components/cards/ExerciseHistory";
 import { OneRepMax } from "@/components/cards/OneRepMax";
 import { MyExerciseHistoryDocument } from "@/generated/graphql";
-import { useAuth } from "@/lib/auth";
+import { useTelegram } from "@/lib/telegram";
 import { useQuery } from "@apollo/client/react";
 import Image from "next/image";
 import { use } from "react";
@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 export default function ExercisesPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const router = useRouter();
-  const { loading: authLoading } = useAuth();
+  const { loading: authLoading } = useTelegram();
 
   const { data } = useQuery(MyExerciseHistoryDocument, {
     variables: { exercise: id },

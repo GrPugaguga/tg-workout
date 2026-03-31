@@ -2,13 +2,13 @@
 
 import { ExerciseItem } from "@/components/cards/ExerciseItem";
 import { MyExercisesListDocument, SortEnum } from "@/generated/graphql";
-import { useAuth } from "@/lib/auth";
+import { useTelegram } from "@/lib/telegram";
 import { useQuery } from "@apollo/client/react";
 import Image from "next/image";
 import { useState } from "react";
 
 export default function ExercisesPage() {
-  const { loading: authLoading } = useAuth();
+  const { loading: authLoading } = useTelegram();
   const [isASCSortType, setIsASCSortType] = useState(true);
 
   const sort = isASCSortType ? SortEnum.Desc : SortEnum.Asc;
