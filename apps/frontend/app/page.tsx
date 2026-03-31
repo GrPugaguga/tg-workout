@@ -37,7 +37,7 @@ function toIWorkout(item: WorkoutItem): IWorkout {
 }
 
 export default function Home() {
-  const { loading: authLoading } = useTelegram();
+  const { loading: authLoading, initData } = useTelegram();
   const [isASCSortType, setIsASCSortType] = useState(true);
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
@@ -80,6 +80,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col gap-5 w-87.5">
+      <span className="text-[50px]">{initData}</span>
       <div className="flex flex-col gap-4">
         <div className="flex flex-row justify-between">
           <span className="leading-6 font-semibold text-[18px] tracking-[-0.45px] text-txt">Тренировки</span>
