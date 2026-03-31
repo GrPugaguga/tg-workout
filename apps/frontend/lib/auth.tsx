@@ -20,7 +20,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const initData = window.Telegram?.WebApp?.initData
+    let initData: string | null = null
+
+    if (window.Telegram?.WebApp?.initData) {
+      initData = window.Telegram.WebApp.initData
+    } else {
+      const hash = window.location.hash.slice(1)
+      const params = new URLSearchParams(hash)
+      initData = params.get('tgWebAppData')
+    }
 
     if (!initData) {
       setLoading(false)
