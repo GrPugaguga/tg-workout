@@ -22,13 +22,23 @@ export default function ExercisesPage({ params }: { params: Promise<{ id: string
 
   const exercise = data?.myExerciseHistory;
 
-  const chartData = exercise?.history.map((h) => ({
-    date: h.date.slice(0, 5),
-    value: h.maxWeight ?? 0,
-  })) ?? [];
+  function formatDate(ts: string, short?: boolean) {
+    const d = new Date(Number(ts))
+    const dd = String(d.getDate()).padStart(2, '0')
+    const mm = String(d.getMonth() + 1).padStart(2, '0')
+    if (short) return `${dd}/${mm}`
+    return `${dd}/${mm}/${d.getFullYear()}`
+  }
+
+  const chartData = [...(exercise?.history ?? [])]
+    .reverse()
+    .map((h) => ({
+      date: formatDate(h.date, true),
+      value: h.maxWeight ?? 0,
+    }));
 
   const historyData = exercise?.history.map((h) => ({
-    date: h.date,
+    date: formatDate(h.date),
     sets: h.sets.map((s) => ({
       sets: s.sets ?? 0,
       reps: s.reps ?? undefined,
