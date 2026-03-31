@@ -18,6 +18,7 @@ interface TelegramContextType {
   initData: string | null
   token: string | null
   loading: boolean
+  error: string | null
 }
 
 const TelegramContext = createContext<TelegramContextType>({
@@ -25,6 +26,7 @@ const TelegramContext = createContext<TelegramContextType>({
   initData: null,
   token: null,
   loading: true,
+  error: null,
 })
 
 export function TelegramProvider({ children }: { children: ReactNode }) {
@@ -32,6 +34,7 @@ export function TelegramProvider({ children }: { children: ReactNode }) {
   const [initData, setInitData] = useState<string | null>(null)
   const [token, setLocalToken] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     let initDataString: string | null = null
@@ -78,19 +81,31 @@ export function TelegramProvider({ children }: { children: ReactNode }) {
         variables: { initData: initDataString },
       }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status} ${res.statusText}`)
+        }
+        return res.json()
+      })
       .then((json) => {
+        if (json.errors) {
+          setError(JSON.stringify(json.errors))
+          return
+        }
         const accessToken = json?.data?.createJwt?.accessToken
         if (accessToken) {
           setToken(accessToken)
           setLocalToken(accessToken)
+        } else {
+          setError('No accessToken in response: ' + JSON.stringify(json))
         }
       })
+      .catch((err) => setError(String(err)))
       .finally(() => setLoading(false))
   }, [])
 
   return (
-    <TelegramContext.Provider value={{ telegramUser, initData, token, loading }}>
+    <TelegramContext.Provider value={{ telegramUser, initData, token, loading, error }}>
       {children}
     </TelegramContext.Provider>
   )
